@@ -20,4 +20,5 @@ Install Entity Framework Core tools reference - .NET Core CLI following [this](h
 
 * [C# Dev Kit](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit)
 * [.NET Core Test Explorer](https://marketplace.visualstudio.com/items?itemName=formulahendry.dotnet-test-explorer)
+* [UMLet](https://marketplace.visualstudio.com/items?itemName=TheUMLetTeam.umlet)
 
