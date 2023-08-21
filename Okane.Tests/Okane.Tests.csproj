@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Okane.Core\Okane.Core.csproj" />
+    <ProjectReference Include="..\Okane.Storage.InMemory\Okane.Storage.InMemory.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,6 @@
 using Okane.Contracts;
-using Okane.Core.Entities;
-using Okane.Core.Repositories;
 using Okane.Core.Services;
+using Okane.Storage.InMemory;
 
 namespace Okane.Tests.Services;
 

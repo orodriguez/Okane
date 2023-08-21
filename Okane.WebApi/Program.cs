@@ -2,6 +2,7 @@ using Okane.Contracts;
 using Okane.Core;
 using Okane.Core.Repositories;
 using Okane.Core.Services;
+using Okane.Storage.InMemory;
 
 var builder = WebApplication.CreateBuilder(args);
 

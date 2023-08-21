@@ -1,6 +1,7 @@
 using Okane.Core.Entities;
+using Okane.Core.Repositories;
 
-namespace Okane.Core.Repositories;
+namespace Okane.Storage.InMemory;
 
 public class InMemoryExpensesRepository : IExpensesRepository
 {
