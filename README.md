@@ -14,7 +14,8 @@ Install Entity Framework Core tools reference - .NET Core CLI following [this](h
 
 ## Development Environment
 
-* Install [VS Code](https://code.visualstudio.com/download)
+* I would recommend [Rider](https://www.jetbrains.com/es-es/rider/download)
+* The project also works with [VS Code](https://code.visualstudio.com/download)
 
 ## VS Code Extensions
 
