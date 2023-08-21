@@ -7,9 +7,12 @@ public class ExpensesService
     public ExpensesService(IExpensesRepository expenses) =>
         _expenses = expenses;
 
-    public Expense RegisterExpense(Expense expense)
+    public Expense Register(Expense expense)
     {
         _expenses.Add(expense);
         return expense;
     }
+
+    public IEnumerable<Expense> RetrieveAll() => 
+        _expenses.All();
 }

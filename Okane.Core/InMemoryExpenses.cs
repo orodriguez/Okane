@@ -8,7 +8,7 @@ public class InMemoryExpensesRepository : IExpensesRepository
     {
     }
 
-    public InMemoryExpensesRepository(IList<Expense> expenses) =>
+    private InMemoryExpensesRepository(IList<Expense> expenses) =>
         _expenses = expenses;
 
     public void Add(Expense expense)
@@ -16,4 +16,6 @@ public class InMemoryExpensesRepository : IExpensesRepository
         expense.Id = _nextId++;
         _expenses.Add(expense);
     }
+
+    public IEnumerable<Expense> All() => _expenses;
 }
