@@ -1,3 +1,6 @@
 {
-    "dotnet.defaultSolution": "Okane.sln"
+    "dotnet.defaultSolution": "Okane.sln",
+    "cSpell.words": [
+        "Okane"
+    ]
 }
