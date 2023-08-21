@@ -12,6 +12,19 @@ dotnet --version
 
 Install Entity Framework Core tools reference - .NET Core CLI following [this](https://learn.microsoft.com/en-us/ef/core/cli/dotnet#update-the-tools) instructions.
 
+### Build
+```bash
+dotnet build
+```
+### Run Tests
+```bash
+dotnet test
+```
+### Run WebApi
+```bash
+dotnet run --project Okane.WebApi/Okane.WebApi.csproj
+```
+
 ## Development Environment
 
 * I would recommend [Rider](https://www.jetbrains.com/es-es/rider/download)
