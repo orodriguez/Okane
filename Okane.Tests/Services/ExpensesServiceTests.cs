@@ -1,3 +1,4 @@
+using Okane.Contracts;
 using Okane.Core.Entities;
 using Okane.Core.Repositories;
 using Okane.Core.Services;
@@ -16,7 +17,7 @@ public class ExpensesServiceTests
     [Fact]
     public void RegisterExpense()
     {
-        var expense = _expensesService.Register(new Expense {
+        var expense = _expensesService.Register(new CreateExpenseRequest {
             Category = "Groceries",
             Amount = 10
         });
@@ -28,12 +29,12 @@ public class ExpensesServiceTests
     
     [Fact]
     public void RetrieveAllExpenses() {
-        _expensesService.Register(new Expense {
+        _expensesService.Register(new CreateExpenseRequest {
             Category = "Groceries",
             Amount = 10
         });
 
-        _expensesService.Register(new Expense {
+        _expensesService.Register(new CreateExpenseRequest {
             Category = "Entertainment",
             Amount = 20
         });

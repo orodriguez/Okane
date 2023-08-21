@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Okane.Contracts\Okane.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>

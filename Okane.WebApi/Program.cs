@@ -1,3 +1,4 @@
+using Okane.Contracts;
 using Okane.Core;
 using Okane.Core.Repositories;
 using Okane.Core.Services;

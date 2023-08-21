@@ -1,7 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using Okane.Core;
-using Okane.Core.Entities;
-using Okane.Core.Services;
+using Okane.Contracts;
 
 namespace Okane.WebApi.Controllers;
 
@@ -15,10 +13,10 @@ public class ExpensesController : ControllerBase
         _expensesService = expensesService;
 
     [HttpPost]
-    public Expense Post(Expense expense) => 
-        _expensesService.Register(expense);
+    public ExpenseResponse Post(CreateExpenseRequest request) => 
+        _expensesService.Register(request);
     
     [HttpGet]
-    public IEnumerable<Expense> Get() => 
+    public IEnumerable<ExpenseResponse> Get() => 
         _expensesService.RetrieveAll();
 }

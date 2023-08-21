@@ -1,3 +1,4 @@
+using Okane.Contracts;
 using Okane.Core.Entities;
 using Okane.Core.Repositories;
 
@@ -10,12 +11,28 @@ public class ExpensesService : IExpensesService
     public ExpensesService(IExpensesRepository expenses) =>
         _expenses = expenses;
 
-    public Expense Register(Expense expense)
+    public ExpenseResponse Register(CreateExpenseRequest request)
     {
+        var expense = new Expense
+        {
+            Category = request.Category,
+            Amount = request.Amount
+        };
+        
         _expenses.Add(expense);
-        return expense;
+        
+        return new ExpenseResponse
+        {
+            Id = expense.Id,
+            Category = expense.Category,
+            Amount = expense.Amount
+        };
     }
 
-    public IEnumerable<Expense> RetrieveAll() => 
-        _expenses.All();
+    public IEnumerable<ExpenseResponse> RetrieveAll() => 
+        _expenses.All().Select(expense => new ExpenseResponse
+        {
+            Amount = expense.Amount,
+            Category = expense.Category
+        });
 }
