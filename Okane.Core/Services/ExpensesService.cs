@@ -1,6 +1,9 @@
-namespace Okane.Tests;
+using Okane.Core.Entities;
+using Okane.Core.Repositories;
 
-public class ExpensesService
+namespace Okane.Core.Services;
+
+public class ExpensesService : IExpensesService
 {
     private readonly IExpensesRepository _expenses;
 

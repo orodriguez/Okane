@@ -1,4 +1,6 @@
-using Okane.Tests;
+using Okane.Core;
+using Okane.Core.Repositories;
+using Okane.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IExpensesRepository, InMemoryExpensesRepository>();
-builder.Services.AddTransient<ExpensesService>();
+builder.Services.AddTransient<IExpensesService, ExpensesService>();
 
 var app = builder.Build();
 

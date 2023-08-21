@@ -1,4 +1,8 @@
-namespace Okane.Tests;
+using Okane.Core.Entities;
+using Okane.Core.Repositories;
+using Okane.Core.Services;
+
+namespace Okane.Tests.Services;
 
 public class ExpensesServiceTests
 {

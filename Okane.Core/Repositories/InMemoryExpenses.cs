@@ -1,4 +1,6 @@
-namespace Okane.Tests;
+using Okane.Core.Entities;
+
+namespace Okane.Core.Repositories;
 
 public class InMemoryExpensesRepository : IExpensesRepository
 {

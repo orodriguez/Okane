@@ -1,6 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-
-namespace Okane.Tests;
+namespace Okane.Core.Entities;
 
 public class Expense
 {
