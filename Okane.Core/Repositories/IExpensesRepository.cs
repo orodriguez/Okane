@@ -8,5 +8,5 @@ public interface IExpensesRepository
     void Add(Expense expense);
     IEnumerable<Expense> All();
     IEnumerable<Expense> ByCategory(string category);
-    Expense ById(int id);
+    Expense? ById(int id);
 }

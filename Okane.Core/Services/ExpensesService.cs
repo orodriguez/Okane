@@ -32,9 +32,12 @@ public class ExpensesService : IExpensesService
             .Select(CreateResponse);
     }
 
-    public ExpenseResponse ById(int id)
+    public ExpenseResponse? ById(int id)
     {
         var expense = _expenses.ById(id);
+
+        if (expense == null)
+            return null;
         
         return CreateResponse(expense);
     }

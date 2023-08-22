@@ -21,6 +21,15 @@ public class ExpensesController : ControllerBase
         _expensesService.Retrieve(category);
     
     [HttpGet("{id}")]
-    public ExpenseResponse ById(int id) => 
-        _expensesService.ById(id);
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExpenseResponse))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult ById(int id)
+    {
+        var response = _expensesService.ById(id);
+
+        if (response == null)
+            return NotFound();
+        
+        return Ok(response);
+    }
 }
