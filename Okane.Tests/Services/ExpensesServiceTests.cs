@@ -60,4 +60,17 @@ public class ExpensesServiceTests
         var expense = Assert.Single(expenses);
         Assert.Equal("Groceries", expense.Category);
     }
+
+    [Fact]
+    public void GetById()
+    {
+        var createdExpense = _expensesService.Register(new CreateExpenseRequest {
+            Category = "Groceries",
+            Amount = 10
+        });
+
+        var retrievedExpense = _expensesService.ById(createdExpense.Id);
+        
+        Assert.Equal(createdExpense.Category, retrievedExpense.Category);
+    }
 }

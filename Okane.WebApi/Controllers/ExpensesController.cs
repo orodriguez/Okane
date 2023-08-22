@@ -19,4 +19,8 @@ public class ExpensesController : ControllerBase
     [HttpGet]
     public IEnumerable<ExpenseResponse> Get(string? category) => 
         _expensesService.Retrieve(category);
+    
+    [HttpGet("{id}")]
+    public ExpenseResponse ById(int id) => 
+        _expensesService.ById(id);
 }
