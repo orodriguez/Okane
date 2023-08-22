@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Okane.Contracts;
 
 namespace Okane.WebApi.Controllers;
@@ -13,9 +14,16 @@ public class ExpensesController : ControllerBase
         _expensesService = expensesService;
 
     [HttpPost]
-    public ExpenseResponse Post(CreateExpenseRequest request) => 
-        _expensesService.Register(request);
-    
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExpenseResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ModelStateDictionary))]
+    public ActionResult<ExpenseResponse> Post(CreateExpenseRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        
+        return _expensesService.Register(request);
+    }
+
     [HttpGet]
     public IEnumerable<ExpenseResponse> Get(string? category) => 
         _expensesService.Retrieve(category);
