@@ -21,4 +21,6 @@ public class InMemoryExpensesRepository : IExpensesRepository
     }
 
     public IEnumerable<Expense> All() => _expenses;
+    public IEnumerable<Expense> ByCategory(string category) => 
+        _expenses.Where(expense => expense.Category == category);
 }

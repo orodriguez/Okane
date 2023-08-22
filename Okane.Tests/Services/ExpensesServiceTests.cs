@@ -38,8 +38,26 @@ public class ExpensesServiceTests
             Amount = 20
         });
 
-        var allExpenses = _expensesService.RetrieveAll();
+        var allExpenses = _expensesService.Retrieve();
 
         Assert.Equal(2, allExpenses.Count());
+    }
+    
+    [Fact]
+    public void RetrieveAllExpenses_FilterByCategory() {
+        _expensesService.Register(new CreateExpenseRequest {
+            Category = "Groceries",
+            Amount = 10
+        });
+
+        _expensesService.Register(new CreateExpenseRequest {
+            Category = "Entertainment",
+            Amount = 20
+        });
+
+        var expenses = _expensesService.Retrieve("Groceries");
+
+        var expense = Assert.Single(expenses);
+        Assert.Equal("Groceries", expense.Category);
     }
 }

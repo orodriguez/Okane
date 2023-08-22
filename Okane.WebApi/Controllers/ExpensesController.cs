@@ -17,6 +17,6 @@ public class ExpensesController : ControllerBase
         _expensesService.Register(request);
     
     [HttpGet]
-    public IEnumerable<ExpenseResponse> Get() => 
-        _expensesService.RetrieveAll();
+    public IEnumerable<ExpenseResponse> Get(string? category) => 
+        _expensesService.Retrieve(category);
 }

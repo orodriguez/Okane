@@ -18,21 +18,25 @@ public class ExpensesService : IExpensesService
             Category = request.Category,
             Amount = request.Amount
         };
-        
+
         _expenses.Add(expense);
-        
-        return new ExpenseResponse
+
+        return CreateExpenseResponse(expense);
+    }
+
+    public IEnumerable<ExpenseResponse> Retrieve(string? category = null)
+    {
+        var result = category == null ? _expenses.All() : _expenses.ByCategory(category);
+
+        return result
+            .Select(CreateExpenseResponse);
+    }
+
+    private static ExpenseResponse CreateExpenseResponse(Expense expense) =>
+        new()
         {
             Id = expense.Id,
             Category = expense.Category,
             Amount = expense.Amount
         };
-    }
-
-    public IEnumerable<ExpenseResponse> RetrieveAll() => 
-        _expenses.All().Select(expense => new ExpenseResponse
-        {
-            Amount = expense.Amount,
-            Category = expense.Category
-        });
 }
