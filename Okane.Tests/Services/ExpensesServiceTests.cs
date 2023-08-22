@@ -71,6 +71,7 @@ public class ExpensesServiceTests
 
         var retrievedExpense = _expensesService.ById(createdExpense.Id);
         
+        Assert.NotNull(retrievedExpense);
         Assert.Equal(createdExpense.Category, retrievedExpense.Category);
     }
 }

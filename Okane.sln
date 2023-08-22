@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Okane.Contracts", "Okane.Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Okane.Storage.InMemory", "Okane.Storage.InMemory\Okane.Storage.InMemory.csproj", "{D6CDF7AE-CBC9-4667-8E6B-ADDE721F099B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Okane.Storage.EntityFramework", "Okane.Storage.EntityFramework\Okane.Storage.EntityFramework.csproj", "{2FF020F6-CEF4-4B63-B1C7-F0F39DE1A347}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{D6CDF7AE-CBC9-4667-8E6B-ADDE721F099B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6CDF7AE-CBC9-4667-8E6B-ADDE721F099B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6CDF7AE-CBC9-4667-8E6B-ADDE721F099B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FF020F6-CEF4-4B63-B1C7-F0F39DE1A347}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FF020F6-CEF4-4B63-B1C7-F0F39DE1A347}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FF020F6-CEF4-4B63-B1C7-F0F39DE1A347}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FF020F6-CEF4-4B63-B1C7-F0F39DE1A347}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

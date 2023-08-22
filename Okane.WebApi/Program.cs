@@ -1,8 +1,7 @@
 using Okane.Contracts;
-using Okane.Core;
 using Okane.Core.Repositories;
 using Okane.Core.Services;
-using Okane.Storage.InMemory;
+using Okane.Storage.EntityFramework;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +11,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<IExpensesRepository, InMemoryExpensesRepository>();
+
+// App dependencies
+builder.Services.AddTransient<IExpensesRepository, ExpensesRepository>();
 builder.Services.AddTransient<IExpensesService, ExpensesService>();
+builder.Services.AddDbContext<OkaneDbContext>();
 
 var app = builder.Build();
 

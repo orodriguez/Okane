@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Okane.Core\Okane.Core.csproj" />
+      <ProjectReference Include="..\Okane.Storage.EntityFramework\Okane.Storage.EntityFramework.csproj" />
       <ProjectReference Include="..\Okane.Storage.InMemory\Okane.Storage.InMemory.csproj" />
     </ItemGroup>
 

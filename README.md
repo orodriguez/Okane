@@ -24,6 +24,15 @@ dotnet test
 ```bash
 dotnet run --project Okane.WebApi/Okane.WebApi.csproj
 ```
+### Install tools
+```bash
+dotnet tool install --global dotnet-ef
+dotnet tool update --global dotnet-ef
+```
+### Verify instalation
+```bash
+dotnet ef
+```
 
 ## Development Environment
 
