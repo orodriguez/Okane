@@ -15,8 +15,9 @@ public class ExpensesController : ControllerBase
     [HttpPost]
     public ExpenseResponse Post(CreateExpenseRequest request) => 
         _expensesService.Register(request);
-    
+
     [HttpGet]
-    public IEnumerable<ExpenseResponse> Get() => 
-        _expensesService.RetrieveAll();
+    public IEnumerable<ExpenseResponse> Get([FromQuery]string category) => 
+        _expensesService.RetrieveAll().Where(expense => expense.Category == category);
+    
 }
