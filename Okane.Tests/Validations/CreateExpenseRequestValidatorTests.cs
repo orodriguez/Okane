@@ -41,8 +41,10 @@ public class CreateExpenseRequestValidatorTests
     [Fact]
     public void InvalidInvoiceUrl()
     {
-        var result = _validator.Validate(new ValidCreateExpenseRequest
+        var result = _validator.Validate(new CreateExpenseRequest
         {
+            Amount = 10,
+            Category = "Cat",
             InvoiceUrl = "http//invoices.com/invoice1"
         });
         
@@ -51,16 +53,5 @@ public class CreateExpenseRequestValidatorTests
 
         var error = Assert.Single(errors);
         Assert.Equal("The InvoiceUrl field is not a valid fully-qualified http, https, or ftp URL.", error);
-    }
-}
-
-public class ValidCreateExpenseRequest : CreateExpenseRequest
-{
-    public ValidCreateExpenseRequest()
-    {
-        Amount = 10;
-        Category = "CATEGORY";
-        Description = "DESCRIPTION";
-        InvoiceUrl = "http://invoices.com/A";
     }
 }

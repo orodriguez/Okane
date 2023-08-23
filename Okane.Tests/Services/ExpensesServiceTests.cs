@@ -7,15 +7,19 @@ namespace Okane.Tests.Services;
 public class ExpensesServiceTests
 {
     private readonly ExpensesService _expensesService;
+    private DateTime _now;
 
     public ExpensesServiceTests()
     {
-        _expensesService = new ExpensesService(new InMemoryExpensesRepository());
+        _now = DateTime.Parse("2023-01-01");
+        _expensesService = new ExpensesService(new InMemoryExpensesRepository(), () => _now);
     }
 
     [Fact]
     public void RegisterExpense()
     {
+        _now = DateTime.Parse("2023-08-23");
+        
         var expense = _expensesService.Register(new CreateExpenseRequest {
             Category = "Groceries",
             Amount = 10,
@@ -28,6 +32,7 @@ public class ExpensesServiceTests
         Assert.Equal("Groceries", expense.Category);
         Assert.Equal("Food for dinner", expense.Description);
         Assert.Equal("http://invoices.com/1", expense.InvoiceUrl);
+        Assert.Equal(DateTime.Parse("2023-08-23"), expense.CreatedDate);
     }
     
     [Fact]
