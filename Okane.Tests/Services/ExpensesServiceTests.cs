@@ -18,12 +18,14 @@ public class ExpensesServiceTests
     {
         var expense = _expensesService.Register(new CreateExpenseRequest {
             Category = "Groceries",
-            Amount = 10
+            Amount = 10,
+            Description = "Food for dinner"
         });
         
         Assert.Equal(1, expense.Id);
         Assert.Equal(10, expense.Amount);
         Assert.Equal("Groceries", expense.Category);
+        Assert.Equal("Food for dinner", expense.Description);
     }
     
     [Fact]
