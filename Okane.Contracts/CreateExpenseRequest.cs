@@ -10,7 +10,10 @@ public class CreateExpenseRequest
     
     [Required]
     [MaxLength(80)]
-    public required string Category { get; set; }
+    public string Category { get; set; }
 
     public string? Description { get; set; }
+    
+    [Url]
+    public string? InvoiceUrl { get; set; }
 }

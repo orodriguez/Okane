@@ -37,4 +37,30 @@ public class CreateExpenseRequestValidatorTests
         var error = Assert.Single(errors);
         Assert.Equal("The field Category must be a string or array type with a maximum length of '80'.", error);
     }
+    
+    [Fact]
+    public void InvalidInvoiceUrl()
+    {
+        var result = _validator.Validate(new ValidCreateExpenseRequest
+        {
+            InvoiceUrl = "http//invoices.com/invoice1"
+        });
+        
+        var (property, errors) = Assert.Single(result);
+        Assert.Equal(nameof(ExpenseResponse.InvoiceUrl), property);
+
+        var error = Assert.Single(errors);
+        Assert.Equal("The InvoiceUrl field is not a valid fully-qualified http, https, or ftp URL.", error);
+    }
+}
+
+public class ValidCreateExpenseRequest : CreateExpenseRequest
+{
+    public ValidCreateExpenseRequest()
+    {
+        Amount = 10;
+        Category = "CATEGORY";
+        Description = "DESCRIPTION";
+        InvoiceUrl = "http://invoices.com/A";
+    }
 }

@@ -19,13 +19,15 @@ public class ExpensesServiceTests
         var expense = _expensesService.Register(new CreateExpenseRequest {
             Category = "Groceries",
             Amount = 10,
-            Description = "Food for dinner"
+            Description = "Food for dinner",
+            InvoiceUrl = "http://invoices.com/1"
         });
         
         Assert.Equal(1, expense.Id);
         Assert.Equal(10, expense.Amount);
         Assert.Equal("Groceries", expense.Category);
         Assert.Equal("Food for dinner", expense.Description);
+        Assert.Equal("http://invoices.com/1", expense.InvoiceUrl);
     }
     
     [Fact]
