@@ -19,24 +19,28 @@ public class ExpensesServiceTests
     {
         var expense = _expensesService.Register(new CreateExpenseRequest {
             Category = "Groceries",
-            Amount = 10
+            Amount = 10,
+            Description = "Test"
         });
         
         Assert.Equal(1, expense.Id);
         Assert.Equal(10, expense.Amount);
         Assert.Equal("Groceries", expense.Category);
+        Assert.Equal("Test", expense.Description );
     }
     
     [Fact]
     public void RetrieveAllExpenses() {
         _expensesService.Register(new CreateExpenseRequest {
             Category = "Groceries",
-            Amount = 10
+            Amount = 10,
+            Description = "Test"
         });
 
         _expensesService.Register(new CreateExpenseRequest {
             Category = "Entertainment",
-            Amount = 20
+            Amount = 20,
+            Description = "Test"
         });
 
         var allExpenses = _expensesService.RetrieveAll();
