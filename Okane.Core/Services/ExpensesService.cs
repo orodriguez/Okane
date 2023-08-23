@@ -16,7 +16,8 @@ public class ExpensesService : IExpensesService
         var expense = new Expense
         {
             Category = request.Category,
-            Amount = request.Amount
+            Amount = request.Amount,
+            Description = request.Description
         };
         
         _expenses.Add(expense);
@@ -25,7 +26,8 @@ public class ExpensesService : IExpensesService
         {
             Id = expense.Id,
             Category = expense.Category,
-            Amount = expense.Amount
+            Amount = expense.Amount,
+            Description = expense.Description
         };
     }
 
@@ -33,6 +35,7 @@ public class ExpensesService : IExpensesService
         _expenses.All().Select(expense => new ExpenseResponse
         {
             Amount = expense.Amount,
-            Category = expense.Category
+            Category = expense.Category,
+            Description = expense.Description
         });
 }
