@@ -16,7 +16,7 @@ public class CreateExpenseRequestValidatorTests
         var result = _validator.Validate(new CreateExpenseRequest
         {
             Amount = 10,
-            Category = "Food"
+            CategoryName = "Food"
         });
         
         Assert.Empty(result);
@@ -28,14 +28,14 @@ public class CreateExpenseRequestValidatorTests
         var result = _validator.Validate(new CreateExpenseRequest
         {
             Amount = 10,
-            Category = string.Concat(Enumerable.Repeat("x", 100))
+            CategoryName = string.Concat(Enumerable.Repeat("x", 100))
         });
         
         var (property, errors) = Assert.Single(result);
-        Assert.Equal("Category", property);
+        Assert.Equal(nameof(CreateExpenseRequest.CategoryName), property);
 
         var error = Assert.Single(errors);
-        Assert.Equal("The field Category must be a string or array type with a maximum length of '80'.", error);
+        Assert.Equal($"The field {nameof(CreateExpenseRequest.CategoryName)} must be a string or array type with a maximum length of '80'.", error);
     }
     
     [Fact]
@@ -44,7 +44,7 @@ public class CreateExpenseRequestValidatorTests
         var result = _validator.Validate(new CreateExpenseRequest
         {
             Amount = 10,
-            Category = "Cat",
+            CategoryName = "Cat",
             InvoiceUrl = "http//invoices.com/invoice1"
         });
         

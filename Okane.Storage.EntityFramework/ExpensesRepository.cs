@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Okane.Core.Entities;
 using Okane.Core.Repositories;
 
@@ -19,7 +20,8 @@ public class ExpensesRepository : IExpensesRepository
         _db.Expenses;
 
     public IEnumerable<Expense> ByCategory(string category) => 
-        _db.Expenses.Where(expense => expense.Category == category);
+        _db.Expenses.Where(expense => expense.Category.Name == category)
+            .Include(expense => expense.Category);
 
     public Expense? ById(int id) => 
         _db.Expenses.FirstOrDefault(expense => expense.Id == id);

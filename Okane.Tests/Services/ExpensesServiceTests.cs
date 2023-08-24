@@ -1,4 +1,5 @@
 using Okane.Contracts;
+using Okane.Core.Entities;
 using Okane.Core.Services;
 using Okane.Storage.InMemory;
 
@@ -12,7 +13,13 @@ public class ExpensesServiceTests
     public ExpensesServiceTests()
     {
         _now = DateTime.Parse("2023-01-01");
-        _expensesService = new ExpensesService(new InMemoryExpensesRepository(), () => _now);
+        
+        var categories = new InMemoryCategoriesRepository();
+        categories.Add(new Category { Name = "Food"}); 
+        categories.Add(new Category { Name = "Entertainment"}); 
+        categories.Add(new Category { Name = "Groceries"}); 
+        
+        _expensesService = new ExpensesService(new InMemoryExpensesRepository(), categories, () => _now);
     }
 
     [Fact]
@@ -21,7 +28,7 @@ public class ExpensesServiceTests
         _now = DateTime.Parse("2023-08-23");
         
         var expense = _expensesService.Register(new CreateExpenseRequest {
-            Category = "Groceries",
+            CategoryName = "Groceries",
             Amount = 10,
             Description = "Food for dinner",
             InvoiceUrl = "http://invoices.com/1"
@@ -29,7 +36,7 @@ public class ExpensesServiceTests
         
         Assert.Equal(1, expense.Id);
         Assert.Equal(10, expense.Amount);
-        Assert.Equal("Groceries", expense.Category);
+        Assert.Equal("Groceries", expense.CategoryName);
         Assert.Equal("Food for dinner", expense.Description);
         Assert.Equal("http://invoices.com/1", expense.InvoiceUrl);
         Assert.Equal(DateTime.Parse("2023-08-23"), expense.CreatedDate);
@@ -38,12 +45,12 @@ public class ExpensesServiceTests
     [Fact]
     public void RetrieveAllExpenses() {
         _expensesService.Register(new CreateExpenseRequest {
-            Category = "Groceries",
+            CategoryName = "Groceries",
             Amount = 10
         });
 
         _expensesService.Register(new CreateExpenseRequest {
-            Category = "Entertainment",
+            CategoryName = "Entertainment",
             Amount = 20
         });
 
@@ -55,32 +62,32 @@ public class ExpensesServiceTests
     [Fact]
     public void RetrieveAllExpenses_FilterByCategory() {
         _expensesService.Register(new CreateExpenseRequest {
-            Category = "Groceries",
+            CategoryName = "Groceries",
             Amount = 10
         });
 
         _expensesService.Register(new CreateExpenseRequest {
-            Category = "Entertainment",
+            CategoryName = "Entertainment",
             Amount = 20
         });
 
         var expenses = _expensesService.Retrieve("Groceries");
 
         var expense = Assert.Single(expenses);
-        Assert.Equal("Groceries", expense.Category);
+        Assert.Equal("Groceries", expense.CategoryName);
     }
 
     [Fact]
     public void GetById()
     {
         var createdExpense = _expensesService.Register(new CreateExpenseRequest {
-            Category = "Groceries",
+            CategoryName = "Groceries",
             Amount = 10
         });
 
         var retrievedExpense = _expensesService.ById(createdExpense.Id);
         
         Assert.NotNull(retrievedExpense);
-        Assert.Equal(createdExpense.Category, retrievedExpense.Category);
+        Assert.Equal(createdExpense.CategoryName, retrievedExpense.CategoryName);
     }
 }

@@ -6,6 +6,7 @@ namespace Okane.Storage.EntityFramework;
 public class OkaneDbContext : DbContext
 {
     public DbSet<Expense> Expenses { get; set; } = null!;
+    public DbSet<Category> Categories { get; set; } = null!;
 
     public OkaneDbContext()
     {

@@ -7,19 +7,24 @@ namespace Okane.Core.Services;
 public class ExpensesService : IExpensesService
 {
     private readonly IExpensesRepository _expenses;
+    private readonly ICategoriesRepository _categoriesRepository;
     private readonly Func<DateTime> _getCurrentDate;
 
-    public ExpensesService(IExpensesRepository expenses, Func<DateTime> getCurrentDate)
+    public ExpensesService(IExpensesRepository expenses, ICategoriesRepository categoriesRepository,
+        Func<DateTime> getCurrentDate)
     {
         _expenses = expenses;
+        _categoriesRepository = categoriesRepository;
         _getCurrentDate = getCurrentDate;
     }
 
     public ExpenseResponse Register(CreateExpenseRequest request)
     {
+        var category = _categoriesRepository.ByName(request.CategoryName);
+        
         var expense = new Expense
         {
-            Category = request.Category,
+            Category = category,
             Amount = request.Amount,
             Description = request.Description,
             InvoiceUrl = request.InvoiceUrl,
@@ -34,7 +39,7 @@ public class ExpensesService : IExpensesService
     public IEnumerable<ExpenseResponse> Retrieve(string? category = null)
     {
         var result = category == null ? _expenses.All() : _expenses.ByCategory(category);
-
+        
         return result
             .Select(CreateResponse);
     }
@@ -53,7 +58,7 @@ public class ExpensesService : IExpensesService
         new()
         {
             Id = expense.Id,
-            Category = expense.Category,
+            CategoryName = expense.Category.Name,
             Amount = expense.Amount,
             Description = expense.Description,
             InvoiceUrl = expense.InvoiceUrl,
