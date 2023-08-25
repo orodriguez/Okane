@@ -17,12 +17,14 @@ public class ExpensesRepository : IExpensesRepository
     }
 
     public IEnumerable<Expense> All() => 
-        _db.Expenses;
+        _db.Expenses.Include(expense => expense.Category);
 
     public IEnumerable<Expense> ByCategory(string category) => 
         _db.Expenses.Where(expense => expense.Category.Name == category)
             .Include(expense => expense.Category);
 
     public Expense? ById(int id) => 
-        _db.Expenses.FirstOrDefault(expense => expense.Id == id);
+        _db.Expenses
+            .Include(expense => expense.Category)
+            .FirstOrDefault(expense => expense.Id == id);
 }
