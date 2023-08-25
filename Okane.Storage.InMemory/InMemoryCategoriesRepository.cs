@@ -8,8 +8,8 @@ public class InMemoryCategoriesRepository : ICategoriesRepository
     private readonly List<Category> _list = new List<Category>();
     private int _nextId = 1;
 
-    public Category ByName(string categoryName) => 
-        _list.First(category => category.Name == categoryName);
+    public Category? ByName(string categoryName) => 
+        _list.FirstOrDefault(category => category.Name == categoryName);
 
     public void Add(Category category)
     {

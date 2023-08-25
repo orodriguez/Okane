@@ -20,8 +20,13 @@ public class ExpensesController : ControllerBase
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
-        
-        return _expensesService.Register(request);
+
+        return _expensesService.Register(request) switch
+        {
+            ({ } expense, null) => Ok(expense),
+            (null, {} errors) => BadRequest(errors),
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
 
     [HttpGet]

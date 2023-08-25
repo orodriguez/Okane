@@ -18,10 +18,13 @@ public class ExpensesService : IExpensesService
         _getCurrentDate = getCurrentDate;
     }
 
-    public ExpenseResponse Register(CreateExpenseRequest request)
+    public (ExpenseResponse?, Errors?) Register(CreateExpenseRequest request)
     {
         var category = _categoriesRepository.ByName(request.CategoryName);
-        
+
+        if (category == null)
+            return (null, new CategoryDoesNotExist(request.CategoryName));
+
         var expense = new Expense
         {
             Category = category,
@@ -33,15 +36,15 @@ public class ExpensesService : IExpensesService
 
         _expenses.Add(expense);
 
-        return CreateResponse(expense);
+        return (ExpenseResponse(expense), null);
     }
 
     public IEnumerable<ExpenseResponse> Retrieve(string? category = null)
     {
         var result = category == null ? _expenses.All() : _expenses.ByCategory(category);
-        
+
         return result
-            .Select(CreateResponse);
+            .Select(ExpenseResponse);
     }
 
     public ExpenseResponse? ById(int id)
@@ -51,10 +54,10 @@ public class ExpensesService : IExpensesService
         if (expense == null)
             return null;
 
-        return CreateResponse(expense);
+        return ExpenseResponse(expense);
     }
 
-    private static ExpenseResponse CreateResponse(Expense expense) =>
+    private static ExpenseResponse ExpenseResponse(Expense expense) =>
         new()
         {
             Id = expense.Id,

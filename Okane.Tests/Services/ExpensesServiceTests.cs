@@ -27,19 +27,34 @@ public class ExpensesServiceTests
     {
         _now = DateTime.Parse("2023-08-23");
         
-        var expense = _expensesService.Register(new CreateExpenseRequest {
+        var (expense, _) = _expensesService.Register(new CreateExpenseRequest {
             CategoryName = "Groceries",
             Amount = 10,
             Description = "Food for dinner",
             InvoiceUrl = "http://invoices.com/1"
         });
         
+        Assert.NotNull(expense);
         Assert.Equal(1, expense.Id);
         Assert.Equal(10, expense.Amount);
         Assert.Equal("Groceries", expense.CategoryName);
         Assert.Equal("Food for dinner", expense.Description);
         Assert.Equal("http://invoices.com/1", expense.InvoiceUrl);
         Assert.Equal(DateTime.Parse("2023-08-23"), expense.CreatedDate);
+    }
+    
+    [Fact]
+    public void RegisterExpense_WithNonExistingCategory()
+    {
+        var (_, errors) = _expensesService.Register(new CreateExpenseRequest {
+            CategoryName = "Weird Category",
+            Amount = 10,
+            Description = "Food for dinner",
+            InvoiceUrl = "http://invoices.com/1"
+        });
+
+        Assert.NotNull(errors);
+        var error = Assert.Single(errors);
     }
     
     [Fact]
@@ -80,11 +95,12 @@ public class ExpensesServiceTests
     [Fact]
     public void GetById()
     {
-        var createdExpense = _expensesService.Register(new CreateExpenseRequest {
+        var (createdExpense, _) = _expensesService.Register(new CreateExpenseRequest {
             CategoryName = "Groceries",
             Amount = 10
         });
 
+        Assert.NotNull(createdExpense);
         var retrievedExpense = _expensesService.ById(createdExpense.Id);
         
         Assert.NotNull(retrievedExpense);
