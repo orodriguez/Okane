@@ -13,4 +13,9 @@ public class CreateExpenseRequest
     public required string Category { get; set;}
 
     public string? Description { get; set;}
+    
+    [Url(ErrorMessage = "Invalid URL format")]
+    public string? InvoiceUrl { get; set; }
+
+    public DateTime CreatedDate { get; set; }
 }

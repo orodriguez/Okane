@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Okane.Contracts;
+using Okane.Core.Entities;
 
 namespace Okane.WebApi.Controllers;
 
@@ -19,9 +20,27 @@ public class ExpensesController : ControllerBase
     public ActionResult<ExpenseResponse> Post(CreateExpenseRequest request)
     {
         if (!ModelState.IsValid)
+        {
             return BadRequest(ModelState);
+        }
+
+        if (!Uri.TryCreate(request.InvoiceUrl, UriKind.Absolute, out var _))
+        {
+            ModelState.AddModelError("InvoiceUrl", "Invalid URL format");
+            return BadRequest(ModelState);
+        }
         
-        return _expensesService.Register(request);
+        var newExpense = new CreateExpenseRequest
+        {
+
+            InvoiceUrl = request.InvoiceUrl,
+            CreatedDate = DateTime.UtcNow,
+            Category = null
+        };
+
+        var registeredExpense = _expensesService.Register(newExpense);
+
+        return Ok(registeredExpense);
     }
 
     [HttpGet]
