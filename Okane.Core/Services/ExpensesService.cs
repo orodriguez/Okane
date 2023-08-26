@@ -54,6 +54,35 @@ public class ExpensesService : IExpensesService
         return CreateResponse(expense);
     }
 
+    public bool Delete(int id)
+    {
+        return _expenses.Delete(id);
+    }
+
+    public ExpenseResponse? Update(int id, CreateExpenseRequest request)
+    {
+        var category = _categoriesRepository.ByName(request.CategoryName);
+        
+        var expense = new Expense
+        {
+            Category = category,
+            Amount = request.Amount,
+            Description = request.Description,
+            InvoiceUrl = request.InvoiceUrl,
+        };
+
+        var updatedExpense = _expenses.Update(id, expense);
+
+        if (updatedExpense != null)
+        {
+            return CreateResponse(updatedExpense);
+        }
+        else
+        {
+            return null;
+        }
+    }
+
     private static ExpenseResponse CreateResponse(Expense expense) =>
         new()
         {

@@ -21,6 +21,6 @@ public class OkaneDbContext : DbContext
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         
         if (!optionsBuilder.IsConfigured)
-            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=OkaneDev;Username=postgres;Password=1234;");
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=OkaneDev;Username=postgres;Password=password;");
     }
 }

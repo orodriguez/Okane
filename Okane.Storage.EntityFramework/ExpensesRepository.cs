@@ -25,4 +25,36 @@ public class ExpensesRepository : IExpensesRepository
 
     public Expense? ById(int id) => 
         _db.Expenses.FirstOrDefault(expense => expense.Id == id);
+
+    public bool Delete(int id)
+    {
+        Expense? entity = ById(id);
+
+        if (entity != null)
+        {
+            _db.Expenses.Remove(entity);
+            _db.SaveChanges();
+            return true;
+        }
+
+        return false;
+    }
+
+    public Expense? Update(int id, Expense expense)
+    {
+        var oldExpense = ById(id);
+
+        if (oldExpense == null)
+        {
+            return null;
+        }
+        
+        oldExpense.Amount = expense.Amount == null ? oldExpense.Amount : expense.Amount;
+        oldExpense.Category = expense.Category == null ? oldExpense.Category : expense.Category;
+        oldExpense.Description = expense.Description == null ? oldExpense.Description : expense.Description;
+        oldExpense.InvoiceUrl = expense.InvoiceUrl == null ? oldExpense.InvoiceUrl : expense.InvoiceUrl;
+        
+        _db.SaveChanges();
+        return oldExpense;
+    }
 }
