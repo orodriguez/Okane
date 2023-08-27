@@ -49,10 +49,10 @@ public class ExpensesRepository : IExpensesRepository
             return null;
         }
         
-        oldExpense.Amount = expense.Amount == null ? oldExpense.Amount : expense.Amount;
-        oldExpense.Category = expense.Category == null ? oldExpense.Category : expense.Category;
-        oldExpense.Description = expense.Description == null ? oldExpense.Description : expense.Description;
-        oldExpense.InvoiceUrl = expense.InvoiceUrl == null ? oldExpense.InvoiceUrl : expense.InvoiceUrl;
+        oldExpense.Amount =  expense.Amount;
+        oldExpense.Category = expense.Category;
+        oldExpense.Description = expense.Description;
+        oldExpense.InvoiceUrl = expense.InvoiceUrl;
         
         _db.SaveChanges();
         return oldExpense;
