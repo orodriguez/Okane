@@ -61,11 +61,24 @@ Demo Application for the course Back-end fundamentals
 17. [Expense Created Date](https://github.com/orodriguez/Okane/compare/16-expense-invoice-url...17-add-created-date)
     * Deterministic UnitTesting
     * Techniques to make unit tests deterministic
-18. [Refactor: Introduce Categories Table](https://github.com/orodriguez/Okane/compare/17-add-created-date...18-category-entity )
+18. [Refactor: Introduce Categories Table](https://github.com/orodriguez/Okane/compare/17-add-created-date...18-category-entity)
     * Database Normalization
     * Refactoring internal Entities without affecting Contract (Orthogonality)
     * Migration Data: Avoiding data lost in Migrations
-
+### Day 4
+19. [Create Expenses - Category Does not Exist](https://github.com/orodriguez/Okane/compare/18-category-entity...19-expense-with-non-existing-category)
+    * Tupples in C#
+    * Result Object Pattern
+20. [Bufix: Include Category in Expense](https://github.com/orodriguez/Okane/compare/19-expense-with-non-existing-category...20-bug-fix-include-category-in-repository-methods)
+    * Eager Loading
+    * Lazy Loading
+21. [Integration Tests](https://github.com/orodriguez/Okane/compare/20-bug-fix-include-category-in-repository-methods...21-integration-tests)
+    * Types of Unit Testing
+    * Integration Testing
+    * WebApplicationFactory
+    * HttpClient
+22. [Refactor: Move Validations to Service](https://github.com/orodriguez/Okane/compare/21-integration-tests...22-move-validations-to-service)
+    * Thin Controllers
 ## Installing
 
 Download and Install [.net 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0).
