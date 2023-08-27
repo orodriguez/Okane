@@ -28,11 +28,11 @@ public class ExpensesService : IExpensesService
 
         if (errors.Any())
             return (null, errors);
-        
+
         var category = _categoriesRepository.ByName(request.CategoryName);
 
         if (category == null)
-            return (null, new CategoryDoesNotExist(request.CategoryName));
+            return (null, new CategoryDoesNotExistErrors(request.CategoryName));
 
         var expense = new Expense
         {
@@ -66,10 +66,35 @@ public class ExpensesService : IExpensesService
         return ExpenseResponse(expense);
     }
 
+    public (ExpenseResponse?, Errors?) Update(int id, UpdateExpenseRequest request)
+    {
+        var errors = _validator.Validate(request);
+        if (errors.Any())
+            return (null, errors);
+        
+        var category = _categoriesRepository.ByName(request.CategoryName);
+        if (category == null)
+            return (null, new CategoryDoesNotExistErrors(request.CategoryName));
+        
+        var expenseToUpdate = _expenses.ById(id);
+
+        if (expenseToUpdate == null)
+            return (null, new EntityNotFoundErrors(id));
+        
+        expenseToUpdate.Amount = request.Amount;
+        expenseToUpdate.Category = category;
+        expenseToUpdate.InvoiceUrl = request.InvoiceUrl;
+        expenseToUpdate.Description = request.Description;
+        
+        _expenses.Update(expenseToUpdate);
+        
+        return (ExpenseResponse(expenseToUpdate), null);
+    }
+
     public bool Delete(int id)
     {
         var expenseToDelete = _expenses.ById(id);
-        
+
         return expenseToDelete != null && _expenses.Delete(expenseToDelete);
     }
 

@@ -5,13 +5,13 @@ namespace Okane.Storage.InMemory;
 
 public class InMemoryExpensesRepository : IExpensesRepository
 {
-    private readonly IList<Expense> _expenses;
+    private readonly List<Expense> _expenses;
     private int _nextId = 1;
     public InMemoryExpensesRepository() : this(new List<Expense>())
     {
     }
 
-    private InMemoryExpensesRepository(IList<Expense> expenses) =>
+    private InMemoryExpensesRepository(List<Expense> expenses) =>
         _expenses = expenses;
 
     public void Add(Expense expense)
@@ -27,4 +27,11 @@ public class InMemoryExpensesRepository : IExpensesRepository
     public Expense? ById(int id) => _expenses.FirstOrDefault(expense => expense.Id == id);
     public bool Delete(Expense expense) => 
         _expenses.Remove(expense);
+
+    public bool Update(Expense expense)
+    {
+        var index = _expenses.FindIndex(e => e.Id == expense.Id);
+        _expenses[index] = expense;
+        return true;
+    }
 }

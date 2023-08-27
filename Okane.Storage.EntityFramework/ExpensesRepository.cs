@@ -34,4 +34,7 @@ public class ExpensesRepository : IExpensesRepository
         var recordsAffected = _db.SaveChanges();
         return recordsAffected > 0;
     }
+
+    public bool Update(Expense expense) => 
+        _db.SaveChanges() > 0;
 }

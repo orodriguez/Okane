@@ -23,6 +23,18 @@ public class ExpensesController : ControllerBase
             (null, {} errors) => BadRequest(errors),
             _ => throw new ArgumentOutOfRangeException()
         };
+    
+    [HttpPut("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExpenseResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ModelStateDictionary))]
+    public ActionResult<ExpenseResponse> Update([FromRoute]int id, UpdateExpenseRequest request) =>
+        _expensesService.Update(id, request) switch
+        {
+            ({ } expense, null) => Ok(expense),
+            (null, EntityNotFoundErrors) => NotFound(),
+            (null, { } errors) => BadRequest(errors),
+            _ => throw new ArgumentOutOfRangeException()
+        };
 
     [HttpGet]
     public IEnumerable<ExpenseResponse> Get(string? category) => 

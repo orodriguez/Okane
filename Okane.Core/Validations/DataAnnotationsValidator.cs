@@ -8,10 +8,13 @@ public class DataAnnotationsValidator<T> : IValidator<T>
     public Errors Validate(T obj)
     {
         var results = new List<ValidationResult>();
-        
-        var context = new ValidationContext(obj, serviceProvider: null, items: null);
 
-        Validator.TryValidateObject(obj, context, results, validateAllProperties: true);
+        if (obj != null)
+        {
+            var context = new ValidationContext(obj, serviceProvider: null, items: null);
+
+            Validator.TryValidateObject(obj, context, results, validateAllProperties: true);
+        }
 
         var errorsDictionary = results
             .GroupBy(result => string.Join('+', result.MemberNames))

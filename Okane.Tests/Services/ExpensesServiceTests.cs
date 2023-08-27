@@ -139,6 +139,82 @@ public class ExpensesServiceTests
     }
 
     [Fact]
+    public void Update()
+    {
+        var (createdExpense, _) = _expensesService.Register(new CreateExpenseRequest
+        {
+            CategoryName = "Food",
+            Amount = 50
+        });
+        
+        Assert.NotNull(createdExpense);
+        
+        var (updatedExpense, _) = _expensesService.Update(createdExpense.Id, new UpdateExpenseRequest
+        {
+            CategoryName = "Groceries",
+            Amount = 40,
+            InvoiceUrl = "http://invoices.com/1",
+            Description = "Updated Description"
+        });
+        
+        Assert.NotNull(updatedExpense);
+        Assert.Equal(createdExpense.Id, updatedExpense.Id);
+        Assert.Equal(40, updatedExpense.Amount);
+        Assert.Equal("Groceries", updatedExpense.CategoryName);
+        Assert.Equal("Updated Description", updatedExpense.Description);
+        Assert.Equal("http://invoices.com/1", updatedExpense.InvoiceUrl);
+    }
+    
+    [Fact]
+    public void Update_ValidationErrors()
+    {
+        var (_, errors) = _expensesService.Update(1, new UpdateExpenseRequest
+        {
+            CategoryName = "",
+            Amount = 50
+        });
+        
+        Assert.NotNull(errors);
+        var (property, propertyErrors) = Assert.Single(errors);
+        Assert.Equal(nameof(UpdateExpenseRequest.CategoryName), property);
+        var error = Assert.Single(propertyErrors);
+        Assert.Equal("The CategoryName field is required.", error);
+    }
+    
+    [Fact]
+    public void Update_ExpenseIdNotFound()
+    {
+        const int unknownId = 555;
+        var (_, errors) = _expensesService.Update(unknownId, new UpdateExpenseRequest
+        {
+            CategoryName = "Food",
+            Amount = 50
+        });
+        
+        Assert.NotNull(errors);
+        var (property, propertyErrors) = Assert.Single(errors);
+        Assert.Equal("Id", property);
+        var error = Assert.Single(propertyErrors);
+        Assert.Equal("Entity with Id 555 not found", error);
+    }
+    
+    [Fact]
+    public void Update_CategoryNotFound()
+    {
+        var (_, errors) = _expensesService.Update(1, new UpdateExpenseRequest
+        {
+            CategoryName = "Unknown",
+            Amount = 50
+        });
+        
+        Assert.NotNull(errors);
+        var (property, propertyErrors) = Assert.Single(errors);
+        Assert.Equal(nameof(UpdateExpenseRequest.CategoryName), property);
+        var error = Assert.Single(propertyErrors);
+        Assert.Equal("Category with Name Unknown does not exist", error);
+    }
+
+    [Fact]
     public void Delete()
     {
         var (createdExpense, _) = _expensesService.Register(new CreateExpenseRequest

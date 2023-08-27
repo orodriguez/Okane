@@ -79,7 +79,8 @@ Demo Application for the course Back-end fundamentals
     * HttpClient
 22. [Refactor: Move Validations to Service](https://github.com/orodriguez/Okane/compare/21-integration-tests...22-move-validations-to-service)
     * Thin Controllers
-23. [Delete Expense](https://github.com/orodriguez/Okane/compare/22-move-validations-to-service...23-delete-expense))
+23. [Delete Expense](https://github.com/orodriguez/Okane/compare/22-move-validations-to-service...23-delete-expense)
+24. [Update Expense](https://github.com/orodriguez/Okane/compare/23-delete-expense...24-update-expense)
 ## Installing
 
 Download and Install [.net 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0).
