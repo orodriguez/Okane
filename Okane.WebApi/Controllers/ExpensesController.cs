@@ -16,18 +16,13 @@ public class ExpensesController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExpenseResponse))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ModelStateDictionary))]
-    public ActionResult<ExpenseResponse> Post(CreateExpenseRequest request)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        return _expensesService.Register(request) switch
+    public ActionResult<ExpenseResponse> Post(CreateExpenseRequest request) =>
+        _expensesService.Register(request) switch
         {
             ({ } expense, null) => Ok(expense),
             (null, {} errors) => BadRequest(errors),
             _ => throw new ArgumentOutOfRangeException()
         };
-    }
 
     [HttpGet]
     public IEnumerable<ExpenseResponse> Get(string? category) => 

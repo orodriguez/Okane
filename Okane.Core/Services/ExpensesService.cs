@@ -1,6 +1,7 @@
 using Okane.Contracts;
 using Okane.Core.Entities;
 using Okane.Core.Repositories;
+using Okane.Core.Validations;
 
 namespace Okane.Core.Services;
 
@@ -8,18 +9,26 @@ public class ExpensesService : IExpensesService
 {
     private readonly IExpensesRepository _expenses;
     private readonly ICategoriesRepository _categoriesRepository;
+    private readonly IValidator<CreateExpenseRequest> _validator;
     private readonly Func<DateTime> _getCurrentDate;
 
     public ExpensesService(IExpensesRepository expenses, ICategoriesRepository categoriesRepository,
+        IValidator<CreateExpenseRequest> validator,
         Func<DateTime> getCurrentDate)
     {
         _expenses = expenses;
         _categoriesRepository = categoriesRepository;
         _getCurrentDate = getCurrentDate;
+        _validator = validator;
     }
 
     public (ExpenseResponse?, Errors?) Register(CreateExpenseRequest request)
     {
+        var errors = _validator.Validate(request);
+
+        if (errors.Any())
+            return (null, errors);
+        
         var category = _categoriesRepository.ByName(request.CategoryName);
 
         if (category == null)

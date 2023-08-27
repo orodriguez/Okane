@@ -3,9 +3,9 @@ using Okane.Contracts;
 
 namespace Okane.Core.Validations;
 
-public class DataAnnotationsValidator : IValidator<CreateExpenseRequest>
+public class DataAnnotationsValidator<T> : IValidator<T>
 {
-    public IDictionary<string, string[]> Validate(CreateExpenseRequest obj)
+    public Errors Validate(T obj)
     {
         var results = new List<ValidationResult>();
         
@@ -13,11 +13,12 @@ public class DataAnnotationsValidator : IValidator<CreateExpenseRequest>
 
         Validator.TryValidateObject(obj, context, results, validateAllProperties: true);
 
-        return results
+        var errorsDictionary = results
             .GroupBy(result => string.Join('+', result.MemberNames))
             .ToDictionary(
                 grouping => grouping.Key, 
                 ToArray);
+        return new Errors(errorsDictionary);
     }
 
     private static string[] ToArray(IGrouping<string, ValidationResult> grouping) => 

@@ -8,7 +8,7 @@ public class CreateExpenseRequestValidatorTests
     private readonly IValidator<CreateExpenseRequest> _validator;
 
     public CreateExpenseRequestValidatorTests() => 
-        _validator = new DataAnnotationsValidator();
+        _validator = new DataAnnotationsValidator<CreateExpenseRequest>();
 
     [Fact]
     public void Valid()

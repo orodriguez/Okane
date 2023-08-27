@@ -1,6 +1,7 @@
 using Okane.Contracts;
 using Okane.Core.Entities;
 using Okane.Core.Services;
+using Okane.Core.Validations;
 using Okane.Storage.InMemory;
 
 namespace Okane.Tests.Services;
@@ -19,7 +20,11 @@ public class ExpensesServiceTests
         categories.Add(new Category { Name = "Entertainment"}); 
         categories.Add(new Category { Name = "Groceries"}); 
         
-        _expensesService = new ExpensesService(new InMemoryExpensesRepository(), categories, () => _now);
+        _expensesService = new ExpensesService(
+            new InMemoryExpensesRepository(), 
+            categories, 
+            new DataAnnotationsValidator<CreateExpenseRequest>(), 
+            () => _now);
     }
 
     [Fact]
@@ -42,7 +47,22 @@ public class ExpensesServiceTests
         Assert.Equal("http://invoices.com/1", expense.InvoiceUrl);
         Assert.Equal(DateTime.Parse("2023-08-23"), expense.CreatedDate);
     }
+    
+    [Fact]
+    public void RegisterExpense_AmountZero()
+    {
+        var (_, errors) = _expensesService.Register(new CreateExpenseRequest {
+            CategoryName = "Food",
+            Amount = 0
+        });
 
+        Assert.NotNull(errors);
+        var (property, propertyErrors) = Assert.Single(errors);
+        Assert.Equal(nameof(CreateExpenseRequest.Amount), property);
+        var error = Assert.Single(propertyErrors);
+        Assert.Equal("The field Amount must be between 1 and 1000000.", error);
+    }
+    
     [Fact]
     public void RegisterExpense_WithNonExistingCategory()
     {

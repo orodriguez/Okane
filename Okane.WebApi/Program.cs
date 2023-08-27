@@ -1,6 +1,7 @@
 using Okane.Contracts;
 using Okane.Core.Repositories;
 using Okane.Core.Services;
+using Okane.Core.Validations;
 using Okane.Storage.EntityFramework;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ builder.Services.AddSwaggerGen();
 // App dependencies
 builder.Services.AddTransient<IExpensesRepository, ExpensesRepository>();
 builder.Services.AddTransient<IExpensesService, ExpensesService>();
+builder.Services.AddTransient<IValidator<CreateExpenseRequest>, DataAnnotationsValidator<CreateExpenseRequest>>();
 builder.Services.AddTransient<ICategoriesRepository, CategoriesRepository>();
 builder.Services.AddTransient<Func<DateTime>>(provider => () => DateTime.Now);
 builder.Services.AddDbContext<OkaneDbContext>();
