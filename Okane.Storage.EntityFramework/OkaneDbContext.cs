@@ -7,6 +7,7 @@ public class OkaneDbContext : DbContext
 {
     public DbSet<Expense> Expenses { get; set; } = null!;
     public DbSet<Category> Categories { get; set; } = null!;
+    public DbSet<User> Users { get; set; }
 
     public OkaneDbContext()
     {
