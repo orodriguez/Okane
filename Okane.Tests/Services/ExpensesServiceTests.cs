@@ -42,19 +42,20 @@ public class ExpensesServiceTests
         Assert.Equal("http://invoices.com/1", expense.InvoiceUrl);
         Assert.Equal(DateTime.Parse("2023-08-23"), expense.CreatedDate);
     }
-    
+
     [Fact]
     public void RegisterExpense_WithNonExistingCategory()
     {
         var (_, errors) = _expensesService.Register(new CreateExpenseRequest {
             CategoryName = "Weird Category",
-            Amount = 10,
-            Description = "Food for dinner",
-            InvoiceUrl = "http://invoices.com/1"
+            Amount = 10
         });
 
         Assert.NotNull(errors);
-        var error = Assert.Single(errors);
+        var (property, propertyErrors) = Assert.Single(errors);
+        Assert.Equal(nameof(CreateExpenseRequest.CategoryName), property);
+        var error = Assert.Single(propertyErrors);
+        Assert.Equal("Category with Name Weird Category does not exist", error);
     }
     
     [Fact]
