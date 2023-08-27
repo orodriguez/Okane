@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Okane.Contracts;
+using Okane.Core.Entities;
+using Okane.Core.Services;
 
 namespace Okane.WebApi.Controllers;
 
@@ -20,7 +22,9 @@ public class ExpensesController : ControllerBase
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
-        
+            request.CreatedDate = DateTime.UtcNow;
+
+
         return _expensesService.Register(request);
     }
 
