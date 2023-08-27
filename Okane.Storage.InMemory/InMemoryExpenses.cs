@@ -25,4 +25,6 @@ public class InMemoryExpensesRepository : IExpensesRepository
         _expenses.Where(expense => expense.Category.Name == category);
 
     public Expense? ById(int id) => _expenses.FirstOrDefault(expense => expense.Id == id);
+    public bool Delete(Expense expense) => 
+        _expenses.Remove(expense);
 }

@@ -66,6 +66,13 @@ public class ExpensesService : IExpensesService
         return ExpenseResponse(expense);
     }
 
+    public bool Delete(int id)
+    {
+        var expenseToDelete = _expenses.ById(id);
+        
+        return expenseToDelete != null && _expenses.Delete(expenseToDelete);
+    }
+
     private static ExpenseResponse ExpenseResponse(Expense expense) =>
         new()
         {

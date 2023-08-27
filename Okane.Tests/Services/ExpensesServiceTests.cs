@@ -8,22 +8,22 @@ namespace Okane.Tests.Services;
 
 public class ExpensesServiceTests
 {
-    private readonly ExpensesService _expensesService;
+    private readonly IExpensesService _expensesService;
     private DateTime _now;
 
     public ExpensesServiceTests()
     {
         _now = DateTime.Parse("2023-01-01");
-        
+
         var categories = new InMemoryCategoriesRepository();
-        categories.Add(new Category { Name = "Food"}); 
-        categories.Add(new Category { Name = "Entertainment"}); 
-        categories.Add(new Category { Name = "Groceries"}); 
-        
+        categories.Add(new Category { Name = "Food" });
+        categories.Add(new Category { Name = "Entertainment" });
+        categories.Add(new Category { Name = "Groceries" });
+
         _expensesService = new ExpensesService(
-            new InMemoryExpensesRepository(), 
-            categories, 
-            new DataAnnotationsValidator<CreateExpenseRequest>(), 
+            new InMemoryExpensesRepository(),
+            categories,
+            new DataAnnotationsValidator<CreateExpenseRequest>(),
             () => _now);
     }
 
@@ -31,14 +31,15 @@ public class ExpensesServiceTests
     public void RegisterExpense()
     {
         _now = DateTime.Parse("2023-08-23");
-        
-        var (expense, _) = _expensesService.Register(new CreateExpenseRequest {
+
+        var (expense, _) = _expensesService.Register(new CreateExpenseRequest
+        {
             CategoryName = "Groceries",
             Amount = 10,
             Description = "Food for dinner",
             InvoiceUrl = "http://invoices.com/1"
         });
-        
+
         Assert.NotNull(expense);
         Assert.Equal(1, expense.Id);
         Assert.Equal(10, expense.Amount);
@@ -47,11 +48,12 @@ public class ExpensesServiceTests
         Assert.Equal("http://invoices.com/1", expense.InvoiceUrl);
         Assert.Equal(DateTime.Parse("2023-08-23"), expense.CreatedDate);
     }
-    
+
     [Fact]
     public void RegisterExpense_AmountZero()
     {
-        var (_, errors) = _expensesService.Register(new CreateExpenseRequest {
+        var (_, errors) = _expensesService.Register(new CreateExpenseRequest
+        {
             CategoryName = "Food",
             Amount = 0
         });
@@ -62,11 +64,12 @@ public class ExpensesServiceTests
         var error = Assert.Single(propertyErrors);
         Assert.Equal("The field Amount must be between 1 and 1000000.", error);
     }
-    
+
     [Fact]
     public void RegisterExpense_WithNonExistingCategory()
     {
-        var (_, errors) = _expensesService.Register(new CreateExpenseRequest {
+        var (_, errors) = _expensesService.Register(new CreateExpenseRequest
+        {
             CategoryName = "Weird Category",
             Amount = 10
         });
@@ -77,15 +80,18 @@ public class ExpensesServiceTests
         var error = Assert.Single(propertyErrors);
         Assert.Equal("Category with Name Weird Category does not exist", error);
     }
-    
+
     [Fact]
-    public void RetrieveAllExpenses() {
-        _expensesService.Register(new CreateExpenseRequest {
+    public void RetrieveAllExpenses()
+    {
+        _expensesService.Register(new CreateExpenseRequest
+        {
             CategoryName = "Groceries",
             Amount = 10
         });
 
-        _expensesService.Register(new CreateExpenseRequest {
+        _expensesService.Register(new CreateExpenseRequest
+        {
             CategoryName = "Entertainment",
             Amount = 20
         });
@@ -94,15 +100,18 @@ public class ExpensesServiceTests
 
         Assert.Equal(2, allExpenses.Count());
     }
-    
+
     [Fact]
-    public void RetrieveAllExpenses_FilterByCategory() {
-        _expensesService.Register(new CreateExpenseRequest {
+    public void RetrieveAllExpenses_FilterByCategory()
+    {
+        _expensesService.Register(new CreateExpenseRequest
+        {
             CategoryName = "Groceries",
             Amount = 10
         });
 
-        _expensesService.Register(new CreateExpenseRequest {
+        _expensesService.Register(new CreateExpenseRequest
+        {
             CategoryName = "Entertainment",
             Amount = 20
         });
@@ -116,15 +125,43 @@ public class ExpensesServiceTests
     [Fact]
     public void GetById()
     {
-        var (createdExpense, _) = _expensesService.Register(new CreateExpenseRequest {
+        var (createdExpense, _) = _expensesService.Register(new CreateExpenseRequest
+        {
             CategoryName = "Groceries",
             Amount = 10
         });
 
         Assert.NotNull(createdExpense);
         var retrievedExpense = _expensesService.ById(createdExpense.Id);
-        
+
         Assert.NotNull(retrievedExpense);
         Assert.Equal(createdExpense.CategoryName, retrievedExpense.CategoryName);
+    }
+
+    [Fact]
+    public void Delete()
+    {
+        var (createdExpense, _) = _expensesService.Register(new CreateExpenseRequest
+        {
+            CategoryName = "Food",
+            Amount = 20
+        });
+        
+        Assert.NotNull(createdExpense);
+
+        var isSuccess = _expensesService.Delete(createdExpense.Id);
+        Assert.True(isSuccess);
+        
+        var nonExistingExpense = _expensesService.ById(createdExpense.Id);
+        Assert.Null(nonExistingExpense);
+
+    }
+    
+    [Fact]
+    public void Delete_ExpenseDoesNotExist()
+    {
+        const int unknownExpenseId = 12345;
+        var isSuccess = _expensesService.Delete(unknownExpenseId);
+        Assert.False(isSuccess);
     }
 }

@@ -27,4 +27,11 @@ public class ExpensesRepository : IExpensesRepository
         _db.Expenses
             .Include(expense => expense.Category)
             .FirstOrDefault(expense => expense.Id == id);
+
+    public bool Delete(Expense expense)
+    {
+        _db.Expenses.Remove(expense);
+        var recordsAffected = _db.SaveChanges();
+        return recordsAffected > 0;
+    }
 }

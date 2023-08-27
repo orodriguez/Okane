@@ -9,4 +9,5 @@ public interface IExpensesRepository
     IEnumerable<Expense> All();
     IEnumerable<Expense> ByCategory(string category);
     Expense? ById(int id);
+    bool Delete(Expense expense);
 }

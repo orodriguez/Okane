@@ -31,13 +31,12 @@ public class ExpensesController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExpenseResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult ById(int id)
-    {
-        var response = _expensesService.ById(id);
+    public IActionResult ById(int id) => 
+        _expensesService.ById(id) != null ? Ok(_expensesService.ById(id)) : NotFound();
 
-        if (response == null)
-            return NotFound();
-        
-        return Ok(response);
-    }
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult Delete(int id) => 
+        _expensesService.Delete(id) ? NoContent() : NotFound();
 }
