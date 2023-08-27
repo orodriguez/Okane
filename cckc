@@ -1,0 +1,113 @@
+[33mcommit 2f54333848c1a8a00439d4078749d58e30998fef[m[33m ([m[1;36mHEAD -> [m[1;32mday-2-assignment[m[33m)[m
+Author: Omar Rodriguez <omarjavier15@gmail.com>
+Date:   Tue Aug 22 20:06:40 2023 -0400
+
+    15 Add Expense Description
+
+[33mcommit a2cebd254ac7a0290628c4dd84e851e57c57def8[m
+Author: Omar Rodriguez <omarjavier15@gmail.com>
+Date:   Tue Aug 22 19:57:10 2023 -0400
+
+    14 Introduce EntityFramework project
+
+[33mcommit 615c78cd5007a21f9779766f0b2ba90a17556f65[m
+Author: Omar Rodriguez <omarjavier15@gmail.com>
+Date:   Tue Aug 22 16:42:02 2023 -0400
+
+    13 Test validations
+
+[33mcommit eaa7dd633a02d7f901239491b01b3c571068a5e3[m
+Author: Omar Rodriguez <omarjavier15@gmail.com>
+Date:   Tue Aug 22 15:16:52 2023 -0400
+
+    12 Validate Expense on Creation
+
+[33mcommit 6605f02ecf6795e05fbffc58f389939c4179c0aa[m
+Author: Omar Rodriguez <omarjavier15@gmail.com>
+Date:   Tue Aug 22 14:54:56 2023 -0400
+
+    11 Get Expense by Id, Response types
+
+[33mcommit 05b9eda4000f917cd98d790d2461023175eb03c3[m
+Author: Omar Rodriguez <omarjavier15@gmail.com>
+Date:   Tue Aug 22 14:41:30 2023 -0400
+
+    10 Get Expense by Id
+
+[33mcommit 278f2105152397c473a8667303751268b47537e4[m
+Author: Omar Rodriguez <omarjavier15@gmail.com>
+Date:   Tue Aug 22 14:20:31 2023 -0400
+
+    9 Filter by Category
+
+[33mcommit 7af094a6312aaeaed732c4fea8100fe2c9726c37[m[33m ([m[1;31morigin/8-storage-inmemory[m[33m, [m[1;32m8-storage-inmemory[m[33m)[m
+Author: Omar Rodriguez <orodriguez@grubhub.com>
+Date:   Mon Aug 21 12:20:23 2023 -0400
+
+    8 Add Storage.InMemory
+
+[33mcommit 70c69185d1b9d79fc2b1d9dcccd722c11761f6f2[m[33m ([m[1;31morigin/7-contracts-dtos[m[33m)[m
+Author: Omar Rodriguez <orodriguez@grubhub.com>
+Date:   Sun Aug 20 22:03:18 2023 -0400
+
+    7 Contracts and DTOs
+
+[33mcommit ae0679365a39eec85c474675c5bfe29178f405c2[m[33m ([m[1;31morigin/6-refactor[m[33m)[m
+Author: Omar Rodriguez <orodriguez@grubhub.com>
+Date:   Sun Aug 20 21:45:43 2023 -0400
+
+    6 Refactor Namespaces
+
+[33mcommit e66ccc50ca946bbdc07f0711cb86905924054799[m
+Author: Omar Rodriguez <orodriguez@grubhub.com>
+Date:   Sun Aug 20 21:33:22 2023 -0400
+
+    Update README.md
+
+[33mcommit a4f8278d4aa4b90686b91f22725c75796d5e2e46[m[33m ([m[1;31morigin/5-web-api[m[33m)[m
+Author: Omar Rodriguez <orodriguez@grubhub.com>
+Date:   Sun Aug 20 21:25:36 2023 -0400
+
+    Edit README.md
+
+[33mcommit 93a134db4172b9d3ee476bc4468dcb897371145c[m
+Author: Omar Rodriguez <orodriguez@grubhub.com>
+Date:   Sun Aug 20 21:12:43 2023 -0400
+
+     5 Add Web Api
+
+[33mcommit d9303634a80afe09c40ff38b5831a760600aa91d[m[33m ([m[1;31morigin/4-retrieve-all-expenses[m[33m)[m
+Author: Omar Rodriguez <orodriguez@grubhub.com>
+Date:   Sun Aug 20 21:00:32 2023 -0400
+
+    4 Retrieve All Expenses
+
+[33mcommit fc8f468f1deed36be2704027b298547a9662d972[m[33m ([m[1;31morigin/3-register-expense[m[33m)[m
+Author: Omar Rodriguez <orodriguez@grubhub.com>
+Date:   Sun Aug 20 20:44:34 2023 -0400
+
+    3 Register Expense
+
+[33mcommit 5ef2ac5c76a343291c801246a13c5f8002a2aad9[m[33m ([m[1;31morigin/2-architecture[m[33m)[m
+Author: Omar Rodriguez <orodriguez@grubhub.com>
+Date:   Sun Aug 20 19:00:21 2023 -0400
+
+    Add architecture diagram
+
+[33mcommit d540353918854738677a27a0ece07e2a89c64c5d[m[33m ([m[1;31morigin/1-create-solution-and-tests[m[33m)[m
+Author: Omar Rodriguez <orodriguez@grubhub.com>
+Date:   Sun Aug 20 18:34:50 2023 -0400
+
+    Create Tests and Core projects
+
+[33mcommit 4dd3b834766c50f56fde8beab4c46c416b8bd2ef[m[33m ([m[1;31morigin/0-start[m[33m)[m
+Author: Omar Rodriguez <orodriguez@grubhub.com>
+Date:   Sun Aug 20 18:02:56 2023 -0400
+
+    Initial README file
+
+[33mcommit 29ba6759a500b29c540258a622b2e9408dae0ee3[m
+Author: Omar J. Rodriguez <orodriguez@grubhub.com>
+Date:   Sun Aug 20 17:43:04 2023 -0400
+
+    Initial commit

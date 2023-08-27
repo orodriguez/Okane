@@ -12,6 +12,7 @@ public class CreateExpenseRequest
     [MaxLength(80)]
     public required string CategoryName { get; set; }
 
+
     public string? Description { get; set; }
     
     [Url]
