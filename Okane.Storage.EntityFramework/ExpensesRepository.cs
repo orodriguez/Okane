@@ -23,4 +23,20 @@ public class ExpensesRepository : IExpensesRepository
 
     public Expense? ById(int id) => 
         _db.Expenses.FirstOrDefault(expense => expense.Id == id);
+    
+    public void Delete(int id)
+    {
+        var expenseToDelete = _db.Expenses.Find(id);
+
+        if (expenseToDelete != null)
+        {
+            _db.Expenses.Remove(expenseToDelete);
+            _db.SaveChanges();
+        }
+    }
+    public void Update(Expense expense)
+    {
+        _db.Expenses.Update(expense); 
+        _db.SaveChanges(); 
+    }
 }

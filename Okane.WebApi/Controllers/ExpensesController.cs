@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Okane.Contracts;
 using Okane.Core.Entities;
+using Okane.Core.Services;
 
 namespace Okane.WebApi.Controllers;
 
@@ -59,4 +60,39 @@ public class ExpensesController : ControllerBase
         
         return Ok(response);
     }
+    
+    [HttpDelete("{id}")]
+    public IActionResult DeleteExpense(int id)
+    {
+        var expenseToDelete = _expensesService.ById(id);
+
+        if (expenseToDelete == null)
+        {
+            return NotFound(); 
+        }
+
+        _expensesService.Delete(id); 
+        return NoContent(); 
+    }
+    
+    [HttpPut("{id}")]
+    public IActionResult UpdateExpense(int id, UpdateExpenseRequest request)
+    {
+        var expenseToUpdate = _expensesService.ById(id);
+
+        if (expenseToUpdate == null)
+        {
+            return NotFound(); 
+        }
+
+       
+        expenseToUpdate.Category = request.Category;
+        expenseToUpdate.Amount = request.Amount;
+      
+
+        _expensesService.Update(expenseToUpdate); 
+        return NoContent();
+    }
+
 }
+

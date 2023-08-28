@@ -1,10 +1,11 @@
+using System.Net;
 using Okane.Contracts;
 using Okane.Core.Entities;
 using Okane.Core.Repositories;
 
 namespace Okane.Core.Services;
 
-public class ExpensesService : IExpensesService
+internal class ExpensesService : IExpensesService
 {
     private readonly IExpensesRepository _expenses;
 
@@ -51,4 +52,42 @@ public class ExpensesService : IExpensesService
             Amount = expense.Amount,
             Description = expense.Description
         };
+    public void Delete(int id)
+    {
+        var expenseToDelete = _expenses.ById(id);
+
+        if (expenseToDelete == null)
+        {
+            
+            throw new NotFoundException("Expense not found.");
+        }
+
+        _expenses.Delete(id);
+    }
+
+    public void Update(ExpenseResponse id)
+    {
+        throw new NotImplementedException();
+    }
+    
+}
+
+public class NotFoundException : Exception
+{
+    public NotFoundException(string message) : base(message)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class UpdateExpenseRequest
+{
+    public int Amount { get; set; }
+    public required string Category { get; set; }
+    public string? Description { get; set; }
+    
+    public string? InvoiceUrl { get; set; }
+    
+    public DateTime CreatedDate { get; set; }
+    
 }
