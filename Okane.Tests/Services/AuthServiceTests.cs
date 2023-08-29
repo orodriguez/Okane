@@ -13,12 +13,20 @@ public class AuthServiceTests
     const string HashedPassword = "HASHED_PASSWORD";
     private readonly IAuthService _authService;
     private readonly InMemoryUsersRepository _usersRepository;
+    private readonly Mock<IPasswordHasher> _mockPasswordHasher;
 
     public AuthServiceTests()
     {
         _usersRepository = new InMemoryUsersRepository();
+        
+        _mockPasswordHasher = new Mock<IPasswordHasher>();
+        _mockPasswordHasher.Setup(hasher => hasher.Hash(Password))
+            .Returns(Password);
+        _mockPasswordHasher.Setup(hasher => hasher.Verify(Password, It.IsAny<string>()))
+            .Returns(true);
+        
         _authService = new AuthService(
-            new BCryptPasswordHasher(),
+            _mockPasswordHasher.Object,
             _usersRepository,
             new JwtTokenGenerator());
     }
@@ -37,6 +45,8 @@ public class AuthServiceTests
 
         var userEntity = _usersRepository.ById(createdUser.Id);
         Assert.NotNull(userEntity.HashedPassword);
+        
+        _mockPasswordHasher.Verify(hasher => hasher.Hash(Password), Times.Once);
     }
 
     [Fact]

@@ -95,8 +95,9 @@ Demo Application for the course Back-end fundamentals
     * Bearer Token Header
     * Authorization attribute
 28. [Relate Expenses and User](https://github.com/orodriguez/Okane/compare/27-config-authentication...28-relate-expenses-user)
-    * 
-## Installing
+29. [Mock password Hasher](https://github.com/orodriguez/Okane/compare/28-relate-expenses-user...29-mock-password-hasher)
+    * Mocks: Moq
+    * Fast Unit Tests
 
 Download and Install [.net 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0).
 

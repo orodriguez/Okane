@@ -1,3 +1,4 @@
+using Moq;
 using Okane.Contracts;
 using Okane.Core.Entities;
 using Okane.Core.Security;
@@ -9,11 +10,13 @@ namespace Okane.Tests.Services;
 
 public class ExpensesServiceTests
 {
+    private const string Password = "1234";
     private readonly IExpensesService _expensesService;
     private readonly InMemoryUserSession _session;
     private DateTime _now;
     private readonly IAuthService _authService;
     private readonly UserResponse _currentUser;
+    private readonly Mock<IPasswordHasher> _mockPasswordHasher;
 
     public ExpensesServiceTests()
     {
@@ -21,15 +24,22 @@ public class ExpensesServiceTests
         _now = DateTime.Parse("2023-01-01");
 
         var usersRepository = new InMemoryUsersRepository();
+        
+        _mockPasswordHasher = new Mock<IPasswordHasher>();
+        _mockPasswordHasher.Setup(hasher => hasher.Hash(Password))
+            .Returns(Password);
+        _mockPasswordHasher.Setup(hasher => hasher.Verify(Password, It.IsAny<string>()))
+            .Returns(true);
+        
         _authService = new AuthService(
-            new BCryptPasswordHasher(),
+            _mockPasswordHasher.Object,
             usersRepository,
             new JwtTokenGenerator());
         
         _currentUser = _authService.SignUp(new SignUpRequest
         {
             Email = "test@mail.com",
-            Password = "1234"
+            Password = Password
         });
         
         // Simulates SignIn
