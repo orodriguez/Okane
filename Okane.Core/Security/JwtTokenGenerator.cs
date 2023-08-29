@@ -8,7 +8,7 @@ namespace Okane.Core.Security;
 
 public class JwtTokenGenerator : ITokenGenerator
 {
-    private readonly string _key = "super-secret-key-this-must-be-in-a-file";
+    private const string Key = "super-secret-key-this-must-be-in-a-file";
 
     public string Generate(User user)
     {
@@ -36,8 +36,11 @@ public class JwtTokenGenerator : ITokenGenerator
 
     private SigningCredentials SignCredentials()
     {
-        var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_key));
+        var key = SymmetricSecurityKey();
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         return credentials;
     }
+
+    public static SymmetricSecurityKey SymmetricSecurityKey() => 
+        new(Encoding.ASCII.GetBytes(Key));
 }

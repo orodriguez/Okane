@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Okane.Contracts;
 
 namespace Okane.WebApi.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class ExpensesController : ControllerBase
@@ -37,9 +39,11 @@ public class ExpensesController : ControllerBase
         };
 
     [HttpGet]
-    public IEnumerable<ExpenseResponse> Get(string? category) => 
-        _expensesService.Retrieve(category);
-    
+    public IEnumerable<ExpenseResponse> Get(string? category)
+    {
+        return _expensesService.Retrieve(category);
+    }
+
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExpenseResponse))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
