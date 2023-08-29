@@ -255,7 +255,7 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"var categories = ['Food', 'Entertaiment', 'Taxes'];",
+							"var categories = ['Food', 'Entertainment', 'Taxes'];",
 							"",
 							"pm.environment.set('Category', categories[Math.floor(Math.random() * categories.length)]);"
 						],
@@ -402,7 +402,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"category\": \"kllskdjflsdkjflsdkjflskfdjslkfjdlksfjlksadasdasdasdasdasdasdsadasdsaksdlfkgjsl;dfkgjsl;kfdjg;lskfjgl;skjfglk\",\n    \"amount\": 0,\n    \"invoiceUrl\": \"http/bad:url\"\n}",
+					"raw": "{\n    \"categoryName\": \"kllskdjflsdkjflsdkjflskfdjslkfjdlksfjlksadasdasdasdasdasdasdsadasdsaksdlfkgjsl;dfkgjsl;kfdjg;lskfjgl;skjfglk\",\n    \"amount\": 0,\n    \"invoiceUrl\": \"http/bad:url\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -690,7 +690,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5103/expenses/28",
+					"raw": "http://localhost:5103/expenses/{{createdExpenseId}}",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -698,7 +698,7 @@
 					"port": "5103",
 					"path": [
 						"expenses",
-						"28"
+						"{{createdExpenseId}}"
 					]
 				}
 			},
@@ -847,41 +847,11 @@
 			],
 			"request": {
 				"auth": {
-					"type": "jwt",
-					"jwt": [
+					"type": "bearer",
+					"bearer": [
 						{
-							"key": "algorithm",
-							"value": "HS256",
-							"type": "string"
-						},
-						{
-							"key": "isSecretBase64Encoded",
-							"value": false,
-							"type": "boolean"
-						},
-						{
-							"key": "payload",
-							"value": "{}",
-							"type": "string"
-						},
-						{
-							"key": "addTokenTo",
-							"value": "header",
-							"type": "string"
-						},
-						{
-							"key": "headerPrefix",
-							"value": "Bearer",
-							"type": "string"
-						},
-						{
-							"key": "queryParamKey",
-							"value": "token",
-							"type": "string"
-						},
-						{
-							"key": "header",
-							"value": "{}",
+							"key": "token",
+							"value": "{{token}}",
 							"type": "string"
 						}
 					]
