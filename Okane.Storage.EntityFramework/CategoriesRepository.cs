@@ -17,4 +17,7 @@ public class CategoriesRepository : ICategoriesRepository
         _db.Categories.Add(category);
         _db.SaveChanges();
     }
+
+    public IEnumerable<Category> All() =>
+        _db.Categories;
 }

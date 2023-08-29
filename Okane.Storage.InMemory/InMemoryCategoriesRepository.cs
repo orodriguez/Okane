@@ -16,4 +16,9 @@ public class InMemoryCategoriesRepository : ICategoriesRepository
         category.Id = _nextId++;
         _list.Add(category);
     }
+
+    public IEnumerable<Category> All()
+    {
+        throw new NotImplementedException();
+    }
 }
