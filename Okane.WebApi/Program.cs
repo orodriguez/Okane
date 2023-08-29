@@ -20,6 +20,7 @@ builder.Services.AddTransient<IExpensesRepository, ExpensesRepository>();
 builder.Services.AddTransient<IExpensesService, ExpensesService>();
 builder.Services.AddTransient<IAuthService, AuthService>();
 builder.Services.AddTransient<IPasswordHasher, BCryptPasswordHasher>();
+builder.Services.AddTransient<ITokenGenerator, JwtTokenGenerator>();
 builder.Services.AddTransient<IValidator<CreateExpenseRequest>, DataAnnotationsValidator<CreateExpenseRequest>>();
 builder.Services.AddTransient<ICategoriesRepository, CategoriesRepository>();
 builder.Services.AddTransient<IUsersRepository, UsersRepository>();

@@ -81,9 +81,13 @@ Demo Application for the course Back-end fundamentals
     * Thin Controllers
 23. [Delete Expense](https://github.com/orodriguez/Okane/compare/22-move-validations-to-service...23-delete-expense)
 24. [Update Expense](https://github.com/orodriguez/Okane/compare/23-delete-expense...24-update-expense)
+### Day 4
 25. [Sign Up](https://github.com/orodriguez/Okane/compare/24-update-expense..25-signup)
-    * Mocks: Moq
     * Password Hashers: BCrypt
+26. [Token Generation](https://github.com/orodriguez/Okane/compare/25-signup...26-generate-token)
+    * Jwt Token Generation
+    * Claims
+    * Token Signature
 ## Installing
 
 Download and Install [.net 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0).

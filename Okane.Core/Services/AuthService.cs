@@ -9,11 +9,13 @@ public class AuthService : IAuthService
 {
     private readonly IPasswordHasher _passwordHasher;
     private readonly IUsersRepository _users;
+    private readonly ITokenGenerator _tokenGenerator;
 
-    public AuthService(IPasswordHasher passwordHasher, IUsersRepository users)
+    public AuthService(IPasswordHasher passwordHasher, IUsersRepository users, ITokenGenerator tokenGenerator)
     {
         _passwordHasher = passwordHasher;
         _users = users;
+        _tokenGenerator = tokenGenerator;
     }
 
     public UserResponse SignUp(SignUpRequest request)
@@ -31,5 +33,13 @@ public class AuthService : IAuthService
             Id = user.Id,
             Email = user.Email
         };
+    }
+
+    public string GenerateToken(SignInRequest request)
+    {
+        var user = _users.ByEmail(request.Email);
+        if (!_passwordHasher.Verify(request.Password, user.HashedPassword))
+            throw new NotImplementedException();
+        return _tokenGenerator.Generate(user);
     }
 }

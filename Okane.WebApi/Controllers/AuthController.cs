@@ -16,4 +16,8 @@ public class AuthController : ControllerBase
     [HttpPost("signup")]
     public UserResponse SignUp(SignUpRequest request) => 
         _service.SignUp(request);
+    
+    [HttpPost("token")]
+    public string CreateToken(SignInRequest request) => 
+        _service.GenerateToken(request);
 }

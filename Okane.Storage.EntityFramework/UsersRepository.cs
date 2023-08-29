@@ -14,4 +14,10 @@ public class UsersRepository : IUsersRepository
         _db.Users.Add(user);
         _db.SaveChanges();
     }
+
+    public User? ByEmail(string email) => 
+        _db.Users.FirstOrDefault(user => user.Email == email);
+
+    public User? ByCredentials(string email, string hashedPassword) => 
+        _db.Users.FirstOrDefault(user => user.Email == email && user.HashedPassword == hashedPassword);
 }
