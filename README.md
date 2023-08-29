@@ -88,12 +88,14 @@ Demo Application for the course Back-end fundamentals
     * Jwt Token Generation
     * Claims
     * Token Signature
-27. [Configuring Authentication and Authorization](https://github.com/orodriguez/Okane/compare/27-generate-token...28-config-authentication)
+27. [Configuring Authentication and Authorization](https://github.com/orodriguez/Okane/compare/26-generate-token...27-config-authentication)
     * Password verification
     * AddAuthentication
     * useAuthorization
     * Bearer Token Header
     * Authorization attribute
+28. [Relate Expenses and User](https://github.com/orodriguez/Okane/compare/27-config-authentication...28-relate-expenses-user)
+    * 
 ## Installing
 
 Download and Install [.net 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0).

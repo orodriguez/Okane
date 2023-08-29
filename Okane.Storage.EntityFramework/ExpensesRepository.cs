@@ -1,40 +1,52 @@
 using Microsoft.EntityFrameworkCore;
 using Okane.Core.Entities;
 using Okane.Core.Repositories;
+using Okane.Core.Security;
 
 namespace Okane.Storage.EntityFramework;
 
 public class ExpensesRepository : IExpensesRepository
 {
     private readonly OkaneDbContext _db;
-
-    public ExpensesRepository(OkaneDbContext db) => _db = db;
+    private readonly ISession _session;
+    
+    public ExpensesRepository(OkaneDbContext db, ISession session)
+    {
+        _db = db;
+        _session = session;
+    }
 
     public void Add(Expense expense)
     {
-        _db.Expenses.Add(expense);
+        _db.Add(expense);
         _db.SaveChanges();
     }
 
     public IEnumerable<Expense> All() => 
-        _db.Expenses.Include(expense => expense.Category);
+        UserExpenses().Include(expense => expense.Category);
 
     public IEnumerable<Expense> ByCategory(string category) => 
-        _db.Expenses.Where(expense => expense.Category.Name == category)
+        UserExpenses().Where(expense => expense.Category.Name == category)
             .Include(expense => expense.Category);
 
     public Expense? ById(int id) => 
-        _db.Expenses
+        UserExpenses()
             .Include(expense => expense.Category)
             .FirstOrDefault(expense => expense.Id == id);
 
     public bool Delete(Expense expense)
     {
-        _db.Expenses.Remove(expense);
+        _db.Remove(expense);
         var recordsAffected = _db.SaveChanges();
         return recordsAffected > 0;
     }
 
     public bool Update(Expense expense) => 
         _db.SaveChanges() > 0;
+
+    private IQueryable<Expense> UserExpenses() => 
+        _db.Expenses
+            .Include(expense => expense.Category)
+            .Include(expense => expense.User)
+            .Where(expense => expense.User.Id == _session.GetCurrentUserId());
 }

@@ -10,4 +10,5 @@ public class Expense
 
     public int CategoryId { get; set; }
     public required Category Category { get; set; }
+    public required User User { get; set; }
 }

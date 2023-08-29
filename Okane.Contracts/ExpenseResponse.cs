@@ -8,4 +8,5 @@ public class ExpenseResponse
     public string? Description { get; set; }
     public string? InvoiceUrl { get; set; }
     public DateTime CreatedDate { get; set; }
+    public required UserResponse User { get; set; }
 }

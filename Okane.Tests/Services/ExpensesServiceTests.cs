@@ -1,5 +1,6 @@
 using Okane.Contracts;
 using Okane.Core.Entities;
+using Okane.Core.Security;
 using Okane.Core.Services;
 using Okane.Core.Validations;
 using Okane.Storage.InMemory;
@@ -9,21 +10,42 @@ namespace Okane.Tests.Services;
 public class ExpensesServiceTests
 {
     private readonly IExpensesService _expensesService;
+    private readonly InMemoryUserSession _session;
     private DateTime _now;
+    private readonly IAuthService _authService;
+    private readonly UserResponse _currentUser;
 
     public ExpensesServiceTests()
     {
+        _session = new InMemoryUserSession();
         _now = DateTime.Parse("2023-01-01");
 
+        var usersRepository = new InMemoryUsersRepository();
+        _authService = new AuthService(
+            new BCryptPasswordHasher(),
+            usersRepository,
+            new JwtTokenGenerator());
+        
+        _currentUser = _authService.SignUp(new SignUpRequest
+        {
+            Email = "test@mail.com",
+            Password = "1234"
+        });
+        
+        // Simulates SignIn
+        _session.SetCurrentUserId(_currentUser.Id);
+        
         var categories = new InMemoryCategoriesRepository();
         categories.Add(new Category { Name = "Food" });
         categories.Add(new Category { Name = "Entertainment" });
         categories.Add(new Category { Name = "Groceries" });
-
+        
         _expensesService = new ExpensesService(
             new InMemoryExpensesRepository(),
             categories,
+            usersRepository,
             new DataAnnotationsValidator<CreateExpenseRequest>(),
+            _session,
             () => _now);
     }
 
@@ -47,6 +69,7 @@ public class ExpensesServiceTests
         Assert.Equal("Food for dinner", expense.Description);
         Assert.Equal("http://invoices.com/1", expense.InvoiceUrl);
         Assert.Equal(DateTime.Parse("2023-08-23"), expense.CreatedDate);
+        Assert.Equal(_currentUser.Id, expense.User.Id);
     }
 
     [Fact]

@@ -1,6 +1,7 @@
 using Okane.Contracts;
 using Okane.Core.Entities;
 using Okane.Core.Repositories;
+using Okane.Core.Security;
 using Okane.Core.Validations;
 
 namespace Okane.Core.Services;
@@ -11,15 +12,21 @@ public class ExpensesService : IExpensesService
     private readonly ICategoriesRepository _categoriesRepository;
     private readonly IValidator<CreateExpenseRequest> _validator;
     private readonly Func<DateTime> _getCurrentDate;
+    private readonly IUsersRepository _users;
+    private readonly ISession _session;
 
     public ExpensesService(IExpensesRepository expenses, ICategoriesRepository categoriesRepository,
+        IUsersRepository users,
         IValidator<CreateExpenseRequest> validator,
+        ISession session,
         Func<DateTime> getCurrentDate)
     {
         _expenses = expenses;
         _categoriesRepository = categoriesRepository;
-        _getCurrentDate = getCurrentDate;
+        _users = users;
         _validator = validator;
+        _session = session;
+        _getCurrentDate = getCurrentDate;
     }
 
     public (ExpenseResponse?, Errors?) Register(CreateExpenseRequest request)
@@ -34,12 +41,15 @@ public class ExpensesService : IExpensesService
         if (category == null)
             return (null, new CategoryDoesNotExistErrors(request.CategoryName));
 
+        var users = _users.ById(_session.GetCurrentUserId());
+        
         var expense = new Expense
         {
             Category = category,
             Amount = request.Amount,
             Description = request.Description,
             InvoiceUrl = request.InvoiceUrl,
+            User = users,
             CreatedDate = _getCurrentDate()
         };
 
@@ -98,7 +108,7 @@ public class ExpensesService : IExpensesService
         return expenseToDelete != null && _expenses.Delete(expenseToDelete);
     }
 
-    private static ExpenseResponse ExpenseResponse(Expense expense) =>
+    private ExpenseResponse ExpenseResponse(Expense expense) =>
         new()
         {
             Id = expense.Id,
@@ -106,6 +116,11 @@ public class ExpensesService : IExpensesService
             Amount = expense.Amount,
             Description = expense.Description,
             InvoiceUrl = expense.InvoiceUrl,
-            CreatedDate = expense.CreatedDate
+            CreatedDate = expense.CreatedDate,
+            User = new UserResponse
+            {
+                Id = expense.User.Id,
+                Email = expense.User.Email
+            }
         };
 }

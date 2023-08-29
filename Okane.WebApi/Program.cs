@@ -6,6 +6,8 @@ using Okane.Core.Security;
 using Okane.Core.Services;
 using Okane.Core.Validations;
 using Okane.Storage.EntityFramework;
+using Okane.WebApi;
+using ISession = Okane.Core.Security.ISession;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +39,8 @@ builder.Services
 builder.Services.AddTransient<IExpensesRepository, ExpensesRepository>();
 builder.Services.AddTransient<IExpensesService, ExpensesService>();
 builder.Services.AddTransient<IAuthService, AuthService>();
+builder.Services.AddTransient<ISession, HttpContextSession>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<IPasswordHasher, BCryptPasswordHasher>();
 builder.Services.AddTransient<ITokenGenerator, JwtTokenGenerator>();
 builder.Services.AddTransient<IValidator<CreateExpenseRequest>, DataAnnotationsValidator<CreateExpenseRequest>>();
