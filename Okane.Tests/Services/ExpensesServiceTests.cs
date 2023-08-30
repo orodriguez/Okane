@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Options;
 using Moq;
 using Okane.Contracts;
 using Okane.Core.Entities;
@@ -34,7 +35,13 @@ public class ExpensesServiceTests
         _authService = new AuthService(
             _mockPasswordHasher.Object,
             usersRepository,
-            new JwtTokenGenerator());
+            new JwtTokenGenerator(Options.Create(new JwtSettings
+            {
+                Audience = "public",
+                Issuer = "http://issuer.com",
+                SecretKey = "Super secret and long key, it must be long",
+                ExpirationMinutes = 60
+            })));
         
         _currentUser = _authService.SignUp(new SignUpRequest
         {

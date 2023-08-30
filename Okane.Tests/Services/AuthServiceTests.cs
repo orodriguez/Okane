@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Options;
 using Moq;
 using Okane.Contracts;
 using Okane.Core.Security;
@@ -28,7 +29,13 @@ public class AuthServiceTests
         _authService = new AuthService(
             _mockPasswordHasher.Object,
             _usersRepository,
-            new JwtTokenGenerator());
+            new JwtTokenGenerator(Options.Create(new JwtSettings
+            {
+                Audience = "public",
+                Issuer = "http://issuer.com",
+                SecretKey = "Super secret and long key, it must be long",
+                ExpirationMinutes = 60
+            })));
     }
 
     [Fact]

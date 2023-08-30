@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Okane.Core.Entities;
 
@@ -8,7 +9,9 @@ namespace Okane.Core.Security;
 
 public class JwtTokenGenerator : ITokenGenerator
 {
-    private const string Key = "super-secret-key-this-must-be-in-a-file";
+    private readonly JwtSettings _settings;
+
+    public JwtTokenGenerator(IOptions<JwtSettings> settings) => _settings = settings.Value;
 
     public string Generate(User user)
     {
@@ -25,12 +28,12 @@ public class JwtTokenGenerator : ITokenGenerator
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
         };
 
-    private static JwtSecurityToken CreateJwtToken(Claim[] claims, SigningCredentials credentials) =>
+    private JwtSecurityToken CreateJwtToken(Claim[] claims, SigningCredentials credentials) =>
         new(
-            issuer: "https://okane.com", // Replace with your issuer
-            audience: "public", // Replace with your audience
+            issuer: _settings.Issuer, // Replace with your issuer
+            audience: _settings.Audience, // Replace with your audience
             claims: claims,
-            expires: DateTime.UtcNow.AddHours(1), // Token expiration time
+            expires: DateTime.UtcNow.AddMinutes(_settings.ExpirationMinutes), // Token expiration time
             signingCredentials: credentials
         );
 
@@ -41,6 +44,6 @@ public class JwtTokenGenerator : ITokenGenerator
         return credentials;
     }
 
-    public static SymmetricSecurityKey SymmetricSecurityKey() => 
-        new(Encoding.ASCII.GetBytes(Key));
+    public SymmetricSecurityKey SymmetricSecurityKey() => 
+        new(Encoding.ASCII.GetBytes(_settings.SecretKey));
 }
