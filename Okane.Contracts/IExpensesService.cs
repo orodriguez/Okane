@@ -1,11 +1,10 @@
-namespace Okane.Contracts;
+using Okane.Contracts;
 
-public interface IExpensesService
+namespace Okane.Contracts
 {
-    ExpenseResponse Register(CreateExpenseRequest request);
-    IEnumerable<ExpenseResponse> Retrieve(string? category);
-    ExpenseResponse? ById(int id);
-
-    bool Delete(int id); 
-    ExpenseResponse? Update(int id, ExpenseResponse request);
+    public interface ICategoriesService
+    {
+        CategoryResponse Create(CreateCategoryRequest request);
+        IEnumerable<CategoryResponse> GetAll();
+    }
 }

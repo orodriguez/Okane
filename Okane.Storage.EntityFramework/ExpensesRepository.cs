@@ -32,11 +32,11 @@ public class ExpensesRepository : IExpensesRepository
         var expenseToDelete = ById(id);
 
         if (expenseToDelete == null)
-            return false; // Expense not found, deletion failed
+            return false; 
 
         _db.Expenses.Remove(expenseToDelete);
         _db.SaveChanges();
-        return true; // Deletion successful
+        return true; 
     }
 
     public Expense? Update(int id, Expense updatedExpense)
@@ -46,13 +46,14 @@ public class ExpensesRepository : IExpensesRepository
         if (existingExpense == null)
             return null; 
 
-        // Update the existing expense with the new data
-        existingExpense.Name = updatedExpense.Name;
+        
+        existingExpense.Description = updatedExpense.Description;
         existingExpense.Amount = updatedExpense.Amount;
-        existingExpense.CategoryId = updatedExpense.CategoryId;
-        existingExpense.Date = updatedExpense.Date;
+        existingExpense.Category = updatedExpense.Category;
+        existingExpense.InvoiceUrl = updatedExpense.InvoiceUrl;
+
 
         _db.SaveChanges();
-        return existingExpense; // Updated expense
+        return existingExpense; 
     }
 }
