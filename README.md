@@ -103,8 +103,10 @@ Demo Application for the course Back-end fundamentals
     * appsettings.json
 ### Day 6
 31. [Database Seed](https://github.com/orodriguez/Okane/compare/30-secure-config-file...31-database-seed)
-32. [Organize Dependency Injection Config]https://github.com/orodriguez/Okane/compare/31-database-seed...32-organize-di-config))
+32. [Organize Dependency Injection Config](https://github.com/orodriguez/Okane/compare/31-database-seed...32-organize-di-config)
     * Extensions Methods
+
+
 Download and Install [.net 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0).
 
 Open a terminal and run
