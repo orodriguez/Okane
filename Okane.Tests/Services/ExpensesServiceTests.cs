@@ -13,7 +13,7 @@ public class ExpensesServiceTests
 {
     private const string Password = "1234";
     private readonly IExpensesService _expensesService;
-    private readonly InMemoryUserSession _session;
+    private readonly InMemoryUserSession _userSession;
     private DateTime _now;
     private readonly IAuthService _authService;
     private readonly UserResponse _currentUser;
@@ -21,7 +21,7 @@ public class ExpensesServiceTests
 
     public ExpensesServiceTests()
     {
-        _session = new InMemoryUserSession();
+        _userSession = new InMemoryUserSession();
         _now = DateTime.Parse("2023-01-01");
 
         var usersRepository = new InMemoryUsersRepository();
@@ -50,7 +50,7 @@ public class ExpensesServiceTests
         });
         
         // Simulates SignIn
-        _session.SetCurrentUserId(_currentUser.Id);
+        _userSession.SetCurrentUserId(_currentUser.Id);
         
         var categories = new InMemoryCategoriesRepository();
         categories.Add(new Category { Name = "Food" });
@@ -62,7 +62,7 @@ public class ExpensesServiceTests
             categories,
             usersRepository,
             new DataAnnotationsValidator<CreateExpenseRequest>(),
-            _session,
+            _userSession,
             () => _now);
     }
 

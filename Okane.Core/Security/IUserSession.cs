@@ -1,6 +1,6 @@
 namespace Okane.Core.Security;
 
-public interface ISession
+public interface IUserSession
 {
     int GetCurrentUserId();
 }

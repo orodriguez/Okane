@@ -1,13 +1,13 @@
 using System.Security.Claims;
-using ISession = Okane.Core.Security.ISession;
+using Okane.Core.Security;
 
 namespace Okane.WebApi;
 
-public class HttpContextSession : ISession
+public class HttpContextUserSession : IUserSession
 {
     private readonly IHttpContextAccessor _contextAccessor;
 
-    public HttpContextSession(IHttpContextAccessor contextAccessor) => 
+    public HttpContextUserSession(IHttpContextAccessor contextAccessor) => 
         _contextAccessor = contextAccessor;
 
     public int GetCurrentUserId()

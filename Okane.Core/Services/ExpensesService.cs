@@ -13,19 +13,19 @@ public class ExpensesService : IExpensesService
     private readonly IValidator<CreateExpenseRequest> _validator;
     private readonly Func<DateTime> _getCurrentDate;
     private readonly IUsersRepository _users;
-    private readonly ISession _session;
+    private readonly IUserSession _userSession;
 
     public ExpensesService(IExpensesRepository expenses, ICategoriesRepository categoriesRepository,
         IUsersRepository users,
         IValidator<CreateExpenseRequest> validator,
-        ISession session,
+        IUserSession userSession,
         Func<DateTime> getCurrentDate)
     {
         _expenses = expenses;
         _categoriesRepository = categoriesRepository;
         _users = users;
         _validator = validator;
-        _session = session;
+        _userSession = userSession;
         _getCurrentDate = getCurrentDate;
     }
 
@@ -41,7 +41,7 @@ public class ExpensesService : IExpensesService
         if (category == null)
             return (null, new CategoryDoesNotExistErrors(request.CategoryName));
 
-        var users = _users.ById(_session.GetCurrentUserId());
+        var users = _users.ById(_userSession.GetCurrentUserId());
         
         var expense = new Expense
         {

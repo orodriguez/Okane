@@ -8,12 +8,12 @@ namespace Okane.Storage.EntityFramework;
 public class ExpensesRepository : IExpensesRepository
 {
     private readonly OkaneDbContext _db;
-    private readonly ISession _session;
+    private readonly IUserSession _userSession;
     
-    public ExpensesRepository(OkaneDbContext db, ISession session)
+    public ExpensesRepository(OkaneDbContext db, IUserSession userSession)
     {
         _db = db;
-        _session = session;
+        _userSession = userSession;
     }
 
     public void Add(Expense expense)
@@ -48,5 +48,5 @@ public class ExpensesRepository : IExpensesRepository
         _db.Expenses
             .Include(expense => expense.Category)
             .Include(expense => expense.User)
-            .Where(expense => expense.User.Id == _session.GetCurrentUserId());
+            .Where(expense => expense.User.Id == _userSession.GetCurrentUserId());
 }

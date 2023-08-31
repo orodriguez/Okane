@@ -81,7 +81,7 @@ Demo Application for the course Back-end fundamentals
     * Thin Controllers
 23. [Delete Expense](https://github.com/orodriguez/Okane/compare/22-move-validations-to-service...23-delete-expense)
 24. [Update Expense](https://github.com/orodriguez/Okane/compare/23-delete-expense...24-update-expense)
-### Day 4
+### Day 5
 25. [Sign Up](https://github.com/orodriguez/Okane/compare/24-update-expense..25-signup)
     * Password Hashers: BCrypt
 26. [Token Generation](https://github.com/orodriguez/Okane/compare/25-signup...26-generate-token)
@@ -101,7 +101,10 @@ Demo Application for the course Back-end fundamentals
 30. [Move Sensitive Data to Config](https://github.com/orodriguez/Okane/compare/29-mock-password-hasher...30-secure-config-file)
     * IConfiguration
     * appsettings.json
-
+### Day 6
+31. [Database Seed](https://github.com/orodriguez/Okane/compare/30-secure-config-file...31-database-seed)
+32. [Organize Dependency Injection Config]https://github.com/orodriguez/Okane/compare/31-database-seed...32-organize-di-config))
+    * Extensions Methods
 Download and Install [.net 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0).
 
 Open a terminal and run

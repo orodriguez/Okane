@@ -2,7 +2,7 @@ using Okane.Core.Security;
 
 namespace Okane.Storage.InMemory;
 
-public class InMemoryUserSession : ISession
+public class InMemoryUserSession : IUserSession
 {
     private int _userId;
 
