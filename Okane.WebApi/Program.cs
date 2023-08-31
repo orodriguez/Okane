@@ -1,9 +1,6 @@
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Okane.Core;
-using Okane.Core.Security;
 using Okane.Storage.EntityFramework;
+using Okane.Storage.InMemory;
 using Okane.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,8 +14,12 @@ builder.Services.AddSwaggerGen();
 
 // App dependencies
 builder.Services.AddOkaneCore(builder.Configuration);
-builder.Services.AddOkaneEntityFrameworkStorage();
 builder.Services.AddOkaneWebApi(builder.Configuration);
+
+if (builder.Configuration["Storage"] == "EF")
+    builder.Services.AddOkaneEntityFrameworkStorage();
+else
+    builder.Services.AddOkaneInMemoryStorage();
 
 var app = builder.Build();
 

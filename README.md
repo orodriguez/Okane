@@ -105,6 +105,7 @@ Demo Application for the course Back-end fundamentals
 31. [Database Seed](https://github.com/orodriguez/Okane/compare/30-secure-config-file...31-database-seed)
 32. [Organize Dependency Injection Config](https://github.com/orodriguez/Okane/compare/31-database-seed...32-organize-di-config)
     * Extensions Methods
+33. [Switch Storage by Config](https://github.com/orodriguez/Okane/compare/32-organize-di-config...33-switch-storage-by-config)
 
 
 Download and Install [.net 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0).

@@ -317,7 +317,7 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"var categories = ['Food', 'Entertaiment', 'Taxes'];",
+							"var categories = ['Food', 'Entertainment', 'Taxes'];",
 							"",
 							"pm.environment.set('Category', categories[Math.floor(Math.random() * categories.length)]);"
 						],
