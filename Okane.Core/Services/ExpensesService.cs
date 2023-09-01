@@ -8,12 +8,14 @@ namespace Okane.Core.Services;
 
 public class ExpensesService : IExpensesService
 {
+    private const int RecordsPerPage = 10;
     private readonly IExpensesRepository _expenses;
     private readonly ICategoriesRepository _categoriesRepository;
     private readonly IValidator<CreateExpenseRequest> _validator;
     private readonly Func<DateTime> _getCurrentDate;
     private readonly IUsersRepository _users;
     private readonly IUserSession _userSession;
+
 
     public ExpensesService(IExpensesRepository expenses, ICategoriesRepository categoriesRepository,
         IUsersRepository users,
@@ -58,12 +60,19 @@ public class ExpensesService : IExpensesService
         return (ExpenseResponse(expense), null);
     }
 
-    public IEnumerable<ExpenseResponse> Retrieve(string? category = null)
+    public PaginatedResult<ExpenseResponse> Retrieve(int page = 1, string? category = null)
     {
-        var result = category == null ? _expenses.All() : _expenses.ByCategory(category);
+        var result = category == null
+            ? _expenses.Retrieve(page, RecordsPerPage)
+            : _expenses.ByCategory(category, page, RecordsPerPage);
 
-        return result
-            .Select(ExpenseResponse);
+        return new PaginatedResult<ExpenseResponse>
+        {
+            CurrentPage = page,
+            RecordsPerPage = RecordsPerPage,
+            RecordCount = category == null ? _expenses.Count() : _expenses.CountByCategory(category),
+            Records = result.Select(ExpenseResponse)
+        };
     }
 
     public ExpenseResponse? ById(int id)

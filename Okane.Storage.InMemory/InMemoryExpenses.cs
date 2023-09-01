@@ -1,3 +1,4 @@
+using Okane.Core;
 using Okane.Core.Entities;
 using Okane.Core.Repositories;
 
@@ -20,11 +21,23 @@ public class InMemoryExpensesRepository : IExpensesRepository
         _expenses.Add(expense);
     }
 
-    public IEnumerable<Expense> All() => _expenses;
-    public IEnumerable<Expense> ByCategory(string category) => 
-        _expenses.Where(expense => expense.Category.Name == category);
+    public IEnumerable<Expense> Retrieve(int page, int pageSize) => _expenses.AsQueryable()
+        .Paginate(page, pageSize);
+
+    public IEnumerable<Expense> ByCategory(string category, int page, int pageSize)
+    {
+        var queryable = _expenses
+            .AsQueryable()
+            .Where(expense => expense.Category.Name == category);
+        return queryable
+            .Paginate(page, pageSize);
+    }
+
+    public int CountByCategory(string category) => 
+        _expenses.Count(expense => expense.Category.Name == category);
 
     public Expense? ById(int id) => _expenses.FirstOrDefault(expense => expense.Id == id);
+
     public bool Delete(Expense expense) => 
         _expenses.Remove(expense);
 
@@ -34,4 +47,6 @@ public class InMemoryExpensesRepository : IExpensesRepository
         _expenses[index] = expense;
         return true;
     }
+
+    public int Count() => _expenses.Count();
 }

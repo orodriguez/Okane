@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Okane.Core;
 using Okane.Core.Entities;
 using Okane.Core.Repositories;
 using Okane.Core.Security;
@@ -22,12 +23,14 @@ public class ExpensesRepository : IExpensesRepository
         _db.SaveChanges();
     }
 
-    public IEnumerable<Expense> All() => 
-        UserExpenses().Include(expense => expense.Category);
+    public IEnumerable<Expense> Retrieve(int page, int pageSize) => 
+        UserExpenses().Paginate(page, pageSize);
 
-    public IEnumerable<Expense> ByCategory(string category) => 
-        UserExpenses().Where(expense => expense.Category.Name == category)
-            .Include(expense => expense.Category);
+    public IEnumerable<Expense> ByCategory(string category, int page, int pageSize) => 
+        UserExpenses().Where(expense => expense.Category.Name == category).Paginate(page, pageSize);
+
+    public int CountByCategory(string category) => 
+        UserExpenses().Count(expense => expense.Category.Name == category);
 
     public Expense? ById(int id) => 
         UserExpenses()
@@ -43,6 +46,9 @@ public class ExpensesRepository : IExpensesRepository
 
     public bool Update(Expense expense) => 
         _db.SaveChanges() > 0;
+
+    public int Count() => 
+        _db.Expenses.Count();
 
     private IQueryable<Expense> UserExpenses() => 
         _db.Expenses

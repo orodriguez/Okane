@@ -39,10 +39,8 @@ public class ExpensesController : ControllerBase
         };
 
     [HttpGet]
-    public IEnumerable<ExpenseResponse> Get(string? category)
-    {
-        return _expensesService.Retrieve(category);
-    }
+    public PaginatedResult<ExpenseResponse> Get(int page = 1, string? category = null) => 
+        _expensesService.Retrieve(page, category);
 
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ExpenseResponse))]

@@ -16,7 +16,7 @@ public static class ServiceCollectionExtensions
         if (jwtSettings == null)
             throw new Exception("Unable to read JwtSettings from config");
 
-// Authentication
+        // Authentication
         services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

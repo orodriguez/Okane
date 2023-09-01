@@ -122,7 +122,7 @@ public class ExpensesServiceTests
     }
 
     [Fact]
-    public void RetrieveAllExpenses()
+    public void RetrieveExpenses()
     {
         _expensesService.Register(new CreateExpenseRequest
         {
@@ -136,11 +136,62 @@ public class ExpensesServiceTests
             Amount = 20
         });
 
-        var allExpenses = _expensesService.Retrieve();
-
-        Assert.Equal(2, allExpenses.Count());
+        var paginagedResults = _expensesService.Retrieve();
+        
+        Assert.Equal(2, paginagedResults.RecordCount);
+        Assert.Equal(10, paginagedResults.RecordsPerPage);
+        Assert.Equal(1, paginagedResults.PagesCount);
+        Assert.Equal(1, paginagedResults.CurrentPage);
+        
+        Assert.Equal(2, paginagedResults.Records.Count());
+        Assert.Equal(new[] { "Groceries", "Entertainment" }, 
+            paginagedResults.Records.Select(response => response.CategoryName));
     }
+    
+    [Fact]
+    public void RetrieveExpenses_ManyRecords()
+    {
+        foreach (var recordNum in Enumerable.Range(1, 35))
+        {
+            _expensesService.Register(new CreateExpenseRequest
+            {
+                CategoryName = "Groceries",
+                Amount = 10,
+                Description = $"Record {recordNum}"
+            });    
+        }
+        
+        var paginagedResults = _expensesService.Retrieve(page: 2);
 
+        var firstRecord = paginagedResults.Records.First();
+        
+        Assert.Equal("Record 11", firstRecord.Description);
+        Assert.Equal(10, paginagedResults.Records.Count());
+        Assert.Equal(4, paginagedResults.PagesCount);
+    }
+    
+    [Fact]
+    public void RetrieveExpenses_ManyRecords_ByCategory()
+    {
+        foreach (var recordNum in Enumerable.Range(1, 25))
+        {
+            _expensesService.Register(new CreateExpenseRequest
+            {
+                CategoryName = recordNum % 2 == 0 ? "Groceries" : "Entertainment",
+                Amount = 10,
+                Description = $"Record {recordNum}"
+            });    
+        }
+
+        var paginatedResult = _expensesService.Retrieve(page: 2, category: "Groceries");
+
+        var firstRecord = paginatedResult.Records.First();
+        
+        Assert.Equal("Record 22", firstRecord.Description);
+        Assert.Equal(2, paginatedResult.Records.Count());
+        Assert.Equal(2, paginatedResult.PagesCount);
+    }
+    
     [Fact]
     public void RetrieveAllExpenses_FilterByCategory()
     {
@@ -156,9 +207,9 @@ public class ExpensesServiceTests
             Amount = 20
         });
 
-        var expenses = _expensesService.Retrieve("Groceries");
+        var paginatedResult = _expensesService.Retrieve(category: "Groceries");
 
-        var expense = Assert.Single(expenses);
+        var expense = Assert.Single(paginatedResult.Records);
         Assert.Equal("Groceries", expense.CategoryName);
     }
 
